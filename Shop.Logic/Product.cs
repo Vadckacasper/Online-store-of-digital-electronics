@@ -5,12 +5,12 @@ namespace Shop.Logic
     public class Product
     {
         public int Id { get; }
-        public string Name { get; }
+        public string Title { get; }
 
-        public Product(int id, string name)
+        public Product(int id, string title)
         {
             Id = id;
-            Name = name;
+            Title = title;
         }
     }
 }
