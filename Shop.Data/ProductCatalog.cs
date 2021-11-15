@@ -9,7 +9,7 @@ namespace Shop.Data
         private readonly Product[] Products;
         public Product[] GetArrByTitle(string titlePart)
         {
-            return Products.Where(product => product.Title.Contains(titlePart)).ToArray();
+            return Products.Where(product => product.Name_product.Contains(titlePart)).ToArray();
         }
     }
 }

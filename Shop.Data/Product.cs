@@ -13,7 +13,7 @@ namespace Shop.Data
         public decimal Price { get; }
         public int Available { get; }
         public string Specifications { get; }
-        public byte Rating { get; }
+        public int Rating { get; }
 
 
         public Product(int id_product, string name_product)
