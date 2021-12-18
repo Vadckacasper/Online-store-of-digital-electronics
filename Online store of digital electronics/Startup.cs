@@ -25,7 +25,7 @@ namespace Online_store_of_digital_electronics
             }
 
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
