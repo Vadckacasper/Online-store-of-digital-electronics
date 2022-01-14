@@ -5,8 +5,4 @@
     <RootNamespace>Online_store_of_digital_electronics</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
