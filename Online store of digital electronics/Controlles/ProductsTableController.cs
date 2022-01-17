@@ -22,7 +22,10 @@ namespace Online_store_of_digital_electronics.Controlles
         // GET: ProductsTable
         public async Task<IActionResult> Index()
         {
-            return View(await _context.products.ToListAsync());
+            var Products = _context.products
+        .Include(c => c.manufacturer)
+        .AsNoTracking();
+            return View(await Products.ToListAsync());
         }
 
         // GET: ProductsTable/Details/5

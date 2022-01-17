@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<Online_store_of_digital_electronics.Models.Products>
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ProductIndex";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/Table.css" type="text/css" />
+<link rel="stylesheet" href="~/css/null.css" type="text/css" />
+<h1>Продукты</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,6 +15,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_product)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Id_manufacturer)
             </th>
@@ -33,39 +39,52 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.manufacturer)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Available)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Specifications)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_product">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_product">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_product">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id_product)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id_manufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Available)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specifications)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.manufacturer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.manufacturer.Description)
+                </td>
+                <td padding-left="20">
+                    <a asp-action="Edit" asp-route-id="@item.Id_product">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_product">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_product">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

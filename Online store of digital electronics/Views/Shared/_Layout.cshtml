@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    @await Html.PartialAsync("~/Views/Shared/_Header.cshtml")
     <div>
         @RenderBody()
     </div>

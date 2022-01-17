@@ -28,6 +28,7 @@ namespace Online_store_of_digital_electronics
             services.AddControllersWithViews();
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
