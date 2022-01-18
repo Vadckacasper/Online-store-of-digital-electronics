@@ -16,7 +16,7 @@ namespace Online_store_of_digital_electronics.Data
         public DbSet<ProductCategory> productCategories { get; set; }
         public DbSet<RelationshipProductOrder> relationshipProductOrders { get; set; }
         public DbSet<RelationshipProductCategory> relationshipProductCategories { get; set; }
-
+        public DbSet<ProductImage> ProductsImag { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Products>().ToTable("Products");
@@ -26,7 +26,7 @@ namespace Online_store_of_digital_electronics.Data
             modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
             modelBuilder.Entity<RelationshipProductOrder>().ToTable("RelationshipProductOrder");
             modelBuilder.Entity<RelationshipProductCategory>().ToTable("RelationshipProductCategory");
-
+            modelBuilder.Entity<ProductImage>().ToTable("ProductsImage");
         }
     }
 }

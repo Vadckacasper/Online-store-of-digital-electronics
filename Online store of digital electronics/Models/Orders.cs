@@ -22,11 +22,11 @@ namespace Online_store_of_digital_electronics.Models
         public string Order_name { get; set; }
         public string Comment { get; set; }
         public Buyers Buyers { get; set; }
-        //public ICollection<RelationshipProductOrder> RelationshipProduct { get; set; }
+        public ICollection<RelationshipProductOrder> RelationshipProduct { get; set; }
 
-        //public Orders()
-        //{
-        //    RelationshipProduct = new List<RelationshipProductOrder>();
-        //}
+        public Orders()
+        {
+            RelationshipProduct = new List<RelationshipProductOrder>();
+        }
     }
 }

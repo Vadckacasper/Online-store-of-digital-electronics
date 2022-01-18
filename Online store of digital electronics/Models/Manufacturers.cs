@@ -16,8 +16,9 @@ namespace Online_store_of_digital_electronics.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string Name { get; set; }
         public string Description { get; set; }
-        //public byte[] Logo { get; set; }
-        //public int[] Number_products { get; set; }
+        [Column(TypeName = "image")]
+        public byte[] Logo { get; set; }
+        public int Number_products { get; set; }
 
         public ICollection<Products> Products { get; set; }
         public Manufacturers()

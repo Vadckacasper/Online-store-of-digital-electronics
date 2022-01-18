@@ -15,8 +15,9 @@ namespace Online_store_of_digital_electronics.Models
         [StringLength(50)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string Name { get; set; }
+        [Column(TypeName = "image")]
+        public byte[] Image { get; set; }
         public string Description { get; set; }
-        //public byte[] Image { get; set; } //?
         public bool Available { get; set; }
         // Родительская категория.
         public virtual ProductCategory Parent { get; set; }

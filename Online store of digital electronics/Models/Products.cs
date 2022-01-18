@@ -16,7 +16,6 @@ namespace Online_store_of_digital_electronics.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
-        //public List<byte[]> Image { get; set; }
         public decimal Price { get; set; }
         public bool Available { get; set; }
         public string Specifications { get; set; }
@@ -25,11 +24,12 @@ namespace Online_store_of_digital_electronics.Models
         //Категории, в которых есть данный продукт.
         public ICollection<RelationshipProductCategory> RelationshipCategories { get; set; }
         public ICollection<RelationshipProductOrder> RelationshipOrder { get; set; }
-
+        public ICollection<ProductImage> ProductsImage { get; set; }
         public Products()
         {
             RelationshipCategories = new List<RelationshipProductCategory>();
             RelationshipOrder = new List<RelationshipProductOrder>();
+            ProductsImage = new List<ProductImage>();
         }
     }
 }
