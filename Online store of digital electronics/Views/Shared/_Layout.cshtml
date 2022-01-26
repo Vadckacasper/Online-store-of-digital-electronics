@@ -1,14 +1,18 @@
-﻿<!DOCTYPE html>
-
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
 </head>
 <body>
     @await Html.PartialAsync("~/Views/Shared/_Header.cshtml")
-    <div>
+
+    <div class="container">
         @RenderBody()
     </div>
+    <script src="~/js/bootstrap.min.js"></script>
 </body>
 </html>
+ 

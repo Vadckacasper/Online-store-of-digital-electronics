@@ -5,88 +5,13 @@
     ViewData["Title"] = "ProductIndex";
 }
 
-<link rel="stylesheet" href="~/css/Table.css" type="text/css" />
 <link rel="stylesheet" href="~/css/null.css" type="text/css" />
 <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
 <script src="~/js/bootstrap.min.js"></script>
-<h1>Продукты</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Available)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Specifications)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.manufacturer)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id_product)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id_manufacturer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Available)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Specifications)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.manufacturer.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.manufacturer.Description)
-                </td>
-                <td padding-left="20">
-                    <a asp-action="Edit" asp-route-id="@item.Id_product">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id_product">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id_product">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row mt-5 mb-2">
+    @foreach (Products item in Model)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_AllProducts.cshtml", item)
+    }
+</div>

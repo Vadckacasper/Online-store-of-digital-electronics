@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Online_store_of_digital_electronics.Models.ProductCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<h1>Index</h1>
+
+@foreach (var item in Model)
+{
+
+    
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     Html.DisplayFor(modelItem => item.Name)
+    </button>
+ </div>
+
+}
+

@@ -1,0 +1,9 @@
+﻿@model Products
+ 
+
+<div class="col-lg-3">
+    <a asp-action="Details" asp-route-id="@Model.Id_product"><img class="img-thumbnail" src="@Model.Image" alt="@Model.Name"  /></a>
+    <h2>@Model.Name</h2>
+    <p>Цена: @Model.Price.ToString("c")</p>
+    <p><a class="btn btn-warning" asp-action="Details" asp-route-id="@Model.Id_product">Подробнее</a></p>
+</div>
