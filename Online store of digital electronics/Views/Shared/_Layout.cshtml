@@ -3,16 +3,26 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/main.css" type="text/css" />
+    <title>@ViewBag.Title</title>
 </head>
 <body>
-    @await Html.PartialAsync("~/Views/Shared/_Header.cshtml")
+    <header>
+        @await Html.PartialAsync("~/Views/Shared/Header.cshtml")
+    </header>
+    await Component.InvokeAsync("Category")
 
-    <div class="container">
+    <section>
         @RenderBody()
-    </div>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://kit.fontawesome.com/e5188e6e3f.js" crossorigin="anonymous"></script>
     <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/main.script.js"></script>
 </body>
 </html>
- 

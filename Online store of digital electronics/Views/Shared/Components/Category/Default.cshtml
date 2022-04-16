@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Online_store_of_digital_electronics.Models.ProductCategory>
+
+<div class="offcanvas offcanvas-top" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+        <div class="row">
+            <div class="col-3 border-end">
+                <div class="catalog-header">
+                    <ul class="list-group list-group-flush">
+                        @foreach (ProductCategory item in Model)
+                        {
+                            <li class="list-group-item list-group-item-action catalog-item" data-bs-toggle="collapse" href="#Catalog_@item.Name.ToString()" role="button" aria-controls="Catalog_@item.Name.ToString()">  @item.Name</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-9 subcatalog" id="subcatalog">
+                @foreach (ProductCategory parent in Model)
+                {
+                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@parent.Name.ToString()">
+                        <div class="col-3 m-3">
+                            <div class="subcatalog-item">
+                                <div class="subcatalog-header">@parent.Name</div>
+                                @foreach (ProductCategory child in parent.Children)
+                                {
+                                    <a>
+                                        @child.Name
+                                    </a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                } 
+            </div>
+        </div>
+    </div>
+</div>

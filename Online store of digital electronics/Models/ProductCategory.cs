@@ -18,6 +18,7 @@ namespace Online_store_of_digital_electronics.Models
         public string Image { get; set; }
         public string Description { get; set; }
         public bool Available { get; set; }
+        public int? Id_parent { get; set; }
         // Родительская категория.
         public virtual ProductCategory Parent { get; set; }
         // Дочерние категории.        
@@ -30,6 +31,24 @@ namespace Online_store_of_digital_electronics.Models
         {
             Children = new List<ProductCategory>();
             RelationshipProducts = new List<RelationshipProductCategory>();
+        }
+        public List<ProductCategory> GetCatalog(List<ProductCategory> AllCategories)
+        {
+            List<ProductCategory> productCategories = new List<ProductCategory>();
+
+            var parents = AllCategories.Where(c => c.Id_parent == null);
+            foreach (var parent in parents)
+            {
+                parent.Children = AllCategories.Where(p => p.Id_parent == parent.Id_сategory).ToList();
+                productCategories.Add(parent);
+            }
+            return productCategories;
+        }
+
+        private List<ProductCategory> GetCheldren(ProductCategory parent)
+        {
+
+            return null;
         }
     }
 }

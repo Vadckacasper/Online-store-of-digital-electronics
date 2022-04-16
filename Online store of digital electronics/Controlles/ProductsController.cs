@@ -10,11 +10,11 @@ using Online_store_of_digital_electronics.Models;
 
 namespace Online_store_of_digital_electronics.Controlles
 {
-    public class ProductsTableController : Controller
+    public class ProductsController : Controller
     {
         private readonly ShopContext _context;
 
-        public ProductsTableController(ShopContext context)
+        public ProductsController(ShopContext context)
         {
             _context = context;
         }
@@ -23,7 +23,6 @@ namespace Online_store_of_digital_electronics.Controlles
         public async Task<IActionResult> Index()
         {
             var Products = _context.products
-        .Include(c => c.manufacturer)
         .AsNoTracking();
             return View(await Products.ToListAsync());
         }
@@ -36,7 +35,7 @@ namespace Online_store_of_digital_electronics.Controlles
                 return NotFound();
             }
 
-            var products = await _context.products
+            var products = await _context.products.Include(m => m.manufacturer)
                 .FirstOrDefaultAsync(m => m.Id_product == id);
             if (products == null)
             {
@@ -67,6 +66,8 @@ namespace Online_store_of_digital_electronics.Controlles
             }
             return View(products);
         }
+
+
 
         // GET: ProductsTable/Edit/5
         public async Task<IActionResult> Edit(int? id)

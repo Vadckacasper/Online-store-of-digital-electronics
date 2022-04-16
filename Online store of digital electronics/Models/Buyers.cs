@@ -12,7 +12,7 @@ namespace Online_store_of_digital_electronics.Models
     {
         [Key]
         public int Id_buyer { get; set; }
-        [StringLength(30)]
+        [DataType(DataType.EmailAddress)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string Login { get; set; }
         [StringLength(30)]

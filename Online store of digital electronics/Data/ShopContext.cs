@@ -8,6 +8,10 @@ namespace Online_store_of_digital_electronics.Data
 {
     public class ShopContext : DbContext
     {
+        public ShopContext()
+        {
+        }
+
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) {   }
         public DbSet<Products> products { get; set; }
         public DbSet<Buyers> buyers { get; set; }

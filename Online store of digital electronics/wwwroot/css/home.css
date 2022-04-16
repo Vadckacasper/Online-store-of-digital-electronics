@@ -1,0 +1,10 @@
+﻿.carousel-inner {
+    max-height: 300px;
+    max-width: 1440px;
+    border-radius: 10px;
+}
+
+.carousel-item img {
+    height: 100%;
+    width: auto;
+}

@@ -7,6 +7,7 @@ using Online_store_of_digital_electronics.Data;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace Online_store_of_digital_electronics
 {
@@ -27,6 +28,10 @@ namespace Online_store_of_digital_electronics
             });
             services.AddControllersWithViews();
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentityCore<IdentityUser>(
+        options => options.SignIn.RequireConfirmedAccount = true)
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ShopContext>();
             services.AddMvc();
 
         }

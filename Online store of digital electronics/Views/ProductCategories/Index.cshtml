@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Online_store_of_digital_electronics.Models.ProductCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<h1>Index</h1>
+    @foreach (var parent in Model)
+    {
+            @foreach (var child in parent.Children)
+            {
+            }
+    }

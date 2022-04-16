@@ -10,26 +10,22 @@ using Online_store_of_digital_electronics.Models;
 
 namespace Online_store_of_digital_electronics.Controlles
 {
-    public class ManufacturersTableController : Controller
+    public class BuyersController : Controller
     {
         private readonly ShopContext _context;
 
-        public ManufacturersTableController(ShopContext context)
+        public BuyersController(ShopContext context)
         {
             _context = context;
         }
 
-        // GET: ManufacturersTable
+        // GET: Buyers
         public async Task<IActionResult> Index()
         {
-
-            var Manufacture = _context.manufacturers
-            .Include(c => c.Products)
-            .AsNoTracking();
-            return View(await Manufacture.ToListAsync());
+            return View(await _context.buyers.ToListAsync());
         }
 
-        // GET: ManufacturersTable/Details/5
+        // GET: Buyers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,39 +33,39 @@ namespace Online_store_of_digital_electronics.Controlles
                 return NotFound();
             }
 
-            var manufacturers = await _context.manufacturers
-                .FirstOrDefaultAsync(m => m.Id_manufacturer == id);
-            if (manufacturers == null)
+            var buyers = await _context.buyers
+                .FirstOrDefaultAsync(m => m.Id_buyer == id);
+            if (buyers == null)
             {
                 return NotFound();
             }
 
-            return View(manufacturers);
+            return View(buyers);
         }
 
-        // GET: ManufacturersTable/Create
-        public IActionResult Create()
+        // GET: Buyers/Create
+        public IActionResult Register()
         {
             return View();
         }
 
-        // POST: ManufacturersTable/Create
+        // POST: Buyers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_manufacturer,Name,Description")] Manufacturers manufacturers)
+        public async Task<IActionResult> Register([Bind("Id_buyer,Login,Password,Contacts,IP_address,Status,Sale,Geofence")] Buyers buyers)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(manufacturers);
+                _context.Add(buyers);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(manufacturers);
+            return View(buyers);
         }
 
-        // GET: ManufacturersTable/Edit/5
+        // GET: Buyers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +73,22 @@ namespace Online_store_of_digital_electronics.Controlles
                 return NotFound();
             }
 
-            var manufacturers = await _context.manufacturers.FindAsync(id);
-            if (manufacturers == null)
+            var buyers = await _context.buyers.FindAsync(id);
+            if (buyers == null)
             {
                 return NotFound();
             }
-            return View(manufacturers);
+            return View(buyers);
         }
 
-        // POST: ManufacturersTable/Edit/5
+        // POST: Buyers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_manufacturer,Name,Description")] Manufacturers manufacturers)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_buyer,Login,Password,Contacts,IP_address,Status,Sale,Geofence")] Buyers buyers)
         {
-            if (id != manufacturers.Id_manufacturer)
+            if (id != buyers.Id_buyer)
             {
                 return NotFound();
             }
@@ -101,12 +97,12 @@ namespace Online_store_of_digital_electronics.Controlles
             {
                 try
                 {
-                    _context.Update(manufacturers);
+                    _context.Update(buyers);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ManufacturersExists(manufacturers.Id_manufacturer))
+                    if (!BuyersExists(buyers.Id_buyer))
                     {
                         return NotFound();
                     }
@@ -117,10 +113,10 @@ namespace Online_store_of_digital_electronics.Controlles
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(manufacturers);
+            return View(buyers);
         }
 
-        // GET: ManufacturersTable/Delete/5
+        // GET: Buyers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,30 +124,30 @@ namespace Online_store_of_digital_electronics.Controlles
                 return NotFound();
             }
 
-            var manufacturers = await _context.manufacturers
-                .FirstOrDefaultAsync(m => m.Id_manufacturer == id);
-            if (manufacturers == null)
+            var buyers = await _context.buyers
+                .FirstOrDefaultAsync(m => m.Id_buyer == id);
+            if (buyers == null)
             {
                 return NotFound();
             }
 
-            return View(manufacturers);
+            return View(buyers);
         }
 
-        // POST: ManufacturersTable/Delete/5
+        // POST: Buyers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var manufacturers = await _context.manufacturers.FindAsync(id);
-            _context.manufacturers.Remove(manufacturers);
+            var buyers = await _context.buyers.FindAsync(id);
+            _context.buyers.Remove(buyers);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ManufacturersExists(int id)
+        private bool BuyersExists(int id)
         {
-            return _context.manufacturers.Any(e => e.Id_manufacturer == id);
+            return _context.buyers.Any(e => e.Id_buyer == id);
         }
     }
 }

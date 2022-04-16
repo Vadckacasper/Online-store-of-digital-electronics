@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Online_store_of_digital_electronics.Models.Orders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_buyer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number_products)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery_method)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment_method)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_product)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_buyer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number_products)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delivery_method)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Payment_method)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id_order">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id_order">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id_order">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
