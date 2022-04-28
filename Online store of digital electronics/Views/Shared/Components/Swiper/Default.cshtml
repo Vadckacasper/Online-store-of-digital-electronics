@@ -1,0 +1,33 @@
+﻿@model Online_store_of_digital_electronics.Models.ProductCategory
+
+<section>
+    <h1>@Model.Name</h1>
+    <div class="swiper__container">
+        <div class="swiper-btn leftNav"><i class="fa-solid fa-arrow-left arrow"></i></div>
+        <div class="swiper-btn rightNav"><i class="fa-solid fa-arrow-right arrow"></i></div>
+
+        <div class="main-slider swiper">
+            <div class="swiper-wrapper">
+                @foreach (Products products in Model.Products)
+                {
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="product-img">
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@products.Id_product"><img src="@products.Image" class="card-img-top" alt="..."></a>
+                            </div>
+                            <div class="product-details">
+                                <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@products.Id_product">@products.Name</a></h4>
+                                <p class="text-wrap">@products.Description</p>
+                            </div>
+                            <div class="product-details-button  d-flex justify-content-between align-items-center">
+                                <div class="product-price">@products.Price₽ <small>@{decimal x = products.Price + 2000;}@x₽</small></div>
+                                <a href="#" class="btn btn-primary">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                                    }
+            </div>
+        </div>
+    </div>
+
+</section>

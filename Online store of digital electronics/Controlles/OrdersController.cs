@@ -24,7 +24,12 @@ namespace Online_store_of_digital_electronics.Controlles
         {
             return View(await _context.orders.ToListAsync());
         }
-
+        public IActionResult ShoppingСart()
+        {
+            var order = _context.orders.Where(o => o.Id_buyer==1);
+            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Id_buyer == 1 && o.Status == "Оформление");
+            return View(Cart);
+        }
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {

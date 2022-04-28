@@ -3,16 +3,136 @@
     ViewData["Title"] = "Описание";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/css/null.css" type="text/css" />
-<link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
-<script src="~/js/bootstrap.min.js"></script>
+<section>
 
-<div class="row mt-5 mb-2">
+    <div class="details-product__top-block">
+        <div class="product-details__container">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5">
+                        <div class="text-center"><img src="@Model.Image" class="img-responsive"></div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 ">
+                        <h4 class="box-title mt-5">@Model.manufacturer.Name @Model.Name</h4>
+                        <div class="specifications-min__block p-2">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Экран</td>
+                                        <td>6.1"/2532x1170 Пикс</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Технология экрана</td>
+                                        <td>OLED</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Тип процессора</td>
+                                        <td>A14 Bionic</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Экран</td>
+                                        <td>6.1"/2532x1170 Пикс</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="#specifications" class="link-detailed">Все характеристики</a>
+                        </div>
+                        <div class="description-min__block p-2">
+                            <p>
+                                @Model.Description...
+                                <br><a href="#description" class="link-detailed">Читать далее</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="button-basket__block d-flex justify-content-between align-items-center mt-5">
+                            <div class="product-price"> @Model.Price₽ <small>85999</small></div>
+                            <button asp-action="Index" class="btn btn-primary btn-rounded">Купить сейчас</button>
+                        </div>
+                        <div class="company-logo__block">
+                            <figure>
+                                <img src="https://i.pinimg.com/originals/eb/1e/ac/eb1eacd6c4c846b53c9b2fc508bc0fab.png" alt="">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="product-details__container">
+                <h3 class="box-title text-center" id="description">Описание</h3>
+                <div class="card-body row">
+                    <div class="description__block">
+                        <p>
+                            @Model.Description
+                        </p>
+                    </div>
 
-    @await Html.PartialAsync("~/Views/Shared/_LayoutDetails.cshtml", Model)
+                </div>
+            </div>
+        </div>
 
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id_product">Изменить</a> |
+    </div>
 
-</div>
+
+    <div class="product-details__container">
+        <h3 class="box-title text-center" id="specifications">Характеристики</h3>
+        <div class="card-body row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="table-responsive">
+                    @Model.Specifications
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Экран</td>
+                                <td>6.1"/2532x1170 Пикс</td>
+                            </tr>
+                            <tr>
+                                <td>Технология экрана</td>
+                                <td>OLED</td>
+                            </tr>
+                            <tr>
+                                <td>Тип процессора</td>
+                                <td>A14 Bionic</td>
+                            </tr>
+                            <tr>
+                                <td>Экран</td>
+                                <td>6.1"/2532x1170 Пикс</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Экран</td>
+                                <td>6.1"/2532x1170 Пикс</td>
+                            </tr>
+                            <tr>
+                                <td>Технология экрана</td>
+                                <td>OLED</td>
+                            </tr>
+                            <tr>
+                                <td>Тип процессора</td>
+                                <td>A14 Bionic</td>
+                            </tr>
+                            <tr>
+                                <td>Экран</td>
+                                <td>6.1"/2532x1170 Пикс</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+

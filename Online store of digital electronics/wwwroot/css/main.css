@@ -1,0 +1,397 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/*Логотип*/
+
+.logo {
+    display: block;
+    height: 30px;
+}
+
+.logo img {
+    display: block;
+    max-height: 100px;
+}
+
+
+/**/
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    background-color: #fff;
+    min-width: 320px;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+section {
+    margin: 30px;
+}
+
+a {
+    color: #111;
+    text-decoration: none;
+}
+
+.link-detailed {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb();
+}
+
+
+/*header*/
+
+.navbar-brand {
+    margin-left: 15px;
+    align-items: center;
+}
+
+.navbar-nav {
+    margin-left: 15px;
+    align-items: center;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #111;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.navbar-nav .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.top-menu li a {
+    position: relative;
+    align-items: center;
+}
+
+.top-menu li a::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    background-color: #111;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+
+.top-menu li a:hover::after {
+    transform: scale(1);
+    transition: all .3s;
+}
+
+.nav-item .main-link.active:hover {
+    color: #555;
+}
+
+.nav-icon {
+    font-size: 20;
+    transition: all .3s;
+}
+
+.nav-icon:hover {
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
+
+/*Catalog*/
+
+.offcanvas.offcanvas-top {
+    height: 0px;
+    transform: translateY(52px)
+}
+
+.catalog-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.collapsing {
+    transition: none;
+}
+
+.catalog-item:hover .subcatalog {
+    display: block;
+}
+
+.subcatalog-item {
+    list-style: none;
+    padding: 3px;
+}
+
+.subcatalog-header {
+    color: #111;
+    font-weight: 700!important;
+}
+
+.subcatalog-header:hover {
+    cursor: pointer;
+    color: #555;
+}
+
+.subcatalog-item {
+    flex-direction: column;
+}
+
+.subcatalog-item a {
+    padding-bottom: 2px;
+    color: #111;
+    overflow: hidden;
+    padding: 1px 10px;
+    font-size: 16px;
+}
+
+.subcatalog-item a:hover {
+    cursor: pointer;
+    color: #555;
+}
+
+
+/*Catalog*/
+
+
+/*header*/
+
+
+/*Карусель*/
+
+.carousel-inner {
+    max-height: 300px !important;
+    max-width: 100% !important;
+    border-radius: 10px;
+}
+
+.carousel-item img {
+    height: auto;
+    width: 100%;
+}
+
+
+/*Карусель*/
+
+
+/*Слайдер*/
+
+.leftNav {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    display: inline-block;
+    color: black;
+    font-weight: bolder;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 0.1em;
+    z-index: 2;
+    opacity: 0;
+    transition: all ease 0.8s;
+}
+
+.leftNav:hover {
+    background-color: #999;
+}
+
+.rightNav {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    display: inline-block;
+    color: black;
+    font-weight: bolder;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(50%);
+    right: 0.1em;
+    z-index: 2;
+    opacity: 0;
+    transition: all ease 0.8s;
+}
+
+.rightNav:hover {
+    background-color: #999;
+}
+
+.arrow {
+    margin-left: 30%;
+    position: absolute;
+    top: 25%;
+    font-size: 20px;
+}
+
+
+/*Слайдер*/
+
+
+/*Карта продукта*/
+
+.card {
+    width: 100%;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+    transition: all .3s;
+}
+
+.card:hover {
+    box-shadow: 0 14px 30px -15px rgba(0, 0, 0, 0.75);
+}
+
+.product-img a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    padding: 10px;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.product-details {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.product-details p:hover {
+    color: red;
+}
+
+.product-details h4 a {
+    font-weight: 700;
+    display: block;
+    height: 40px;
+    overflow: hidden;
+}
+
+.product-details p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #999;
+    height: 60px;
+    overflow: hidden;
+}
+
+.product-details-button {
+    overflow: hidden;
+    border-top: 2px solid #eee;
+    padding-top: 15px;
+    margin: 5px;
+}
+
+.product-price {
+    font-size: 18px;
+    color: black;
+    font-weight: 600;
+}
+
+.product-price small {
+    color: #ccc;
+    font-weight: 400;
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+
+
+/*Карта продукта*/
+
+.swiper__container {
+    position: relative;
+}
+
+.swiper {
+    overflow-x: hidden;
+}
+
+.swiper-btn {
+    position: absolute;
+}
+
+.swiper-wrapper {
+    height: auto;
+}
+
+.img-card {
+    display: flex;
+    height: 200px;
+    margin: 10px;
+    background-color: #eee;
+    border-radius: 20px;
+    justify-content: center;
+    top: 50%;
+    transition: all .3s;
+}
+
+.img-card:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.img-card:hover figcaption {
+    color: red;
+}
+
+.img-card figure {
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: 500;
+}
+
+.img-card img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/*Registration*/
+
+.modal-dialog {
+    width: 100%;
+}
+
+.btn-reg-aut {
+    border: 1px solid #0d6efd !important;
+    transition: all .3s;
+}
+
+.btn-reg-aut:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+
+/*Authentication*/
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}

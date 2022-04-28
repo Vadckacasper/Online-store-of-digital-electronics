@@ -1,0 +1,15 @@
+.basket-page__content {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.basket-page__left-block {
+    width: 80%;
+    height: 100%;
+    margin: 5px;
+}
+
+.basket-page__left-block {
+    height: 100%;
+}

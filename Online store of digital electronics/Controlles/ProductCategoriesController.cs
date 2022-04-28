@@ -20,17 +20,20 @@ namespace Online_store_of_digital_electronics.Controlles
         }
 
         // GET: ProductCategoriesTable
-        public async Task<IActionResult> Index(int? parentId = null)
+        public async Task<IActionResult> Index(int? id)
         {
-            List<ProductCategory> productCategories = new List<ProductCategory>();
-
-            var parents = _context.productCategories.Where(c => c.Id_parent == parentId);
-            foreach(var parent in parents)
+            if (id == null)
             {
-                parent.Children = await _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToListAsync();
-                productCategories.Add(parent);
+                return NotFound();
             }
-            return PartialView(productCategories);
+            var productCategory = await _context.productCategories.FirstOrDefaultAsync(m => m.Id_сategory == id);
+
+            if (productCategory == null)
+            {
+                return NotFound();
+            }
+            productCategory = _context.productCategories.Include(p => p.Products).FirstOrDefault(c => c.Id_сategory == id);
+            return View(productCategory);
         }
 
         [HttpGet]

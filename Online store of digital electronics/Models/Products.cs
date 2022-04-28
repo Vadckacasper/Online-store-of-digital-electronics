@@ -23,12 +23,12 @@ namespace Online_store_of_digital_electronics.Models
         public double Rating { get; set; }
         public Manufacturers manufacturer { get; set; }
         //Категории, в которых есть данный продукт.
-        public ICollection<RelationshipProductCategory> RelationshipCategories { get; set; }
-        public ICollection<RelationshipProductOrder> RelationshipOrder { get; set; }
+        public ICollection<ProductCategory> Categories { get; set; }
+        public ICollection<Orders> Order { get; set; }
         public Products()
         {
-            RelationshipCategories = new List<RelationshipProductCategory>();
-            RelationshipOrder = new List<RelationshipProductOrder>();
+            Categories = new List<ProductCategory>();
+            Order = new List<Orders>();
         }
     }
 }

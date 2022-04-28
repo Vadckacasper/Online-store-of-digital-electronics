@@ -20,10 +20,9 @@ namespace Online_store_of_digital_electronics.Controlles
         }
 
         // GET: ProductsTable
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int Id_Category)
         {
-            var Products = _context.products
-        .AsNoTracking();
+            var Products = _context.products.OrderBy(p => p.Price).Include(c => c.Categories);
             return View(await Products.ToListAsync());
         }
 

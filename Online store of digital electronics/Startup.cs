@@ -8,6 +8,7 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Online_store_of_digital_electronics
 {
@@ -34,6 +35,12 @@ namespace Online_store_of_digital_electronics
         .AddEntityFrameworkStores<ShopContext>();
             services.AddMvc();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options => 
+        {
+            options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +49,9 @@ namespace Online_store_of_digital_electronics
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();
 
             app.UseRouting();
             app.UseStaticFiles();

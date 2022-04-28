@@ -1,14 +1,118 @@
-﻿@model IEnumerable<Online_store_of_digital_electronics.Models.ProductCategory>
+﻿@model Online_store_of_digital_electronics.Models.ProductCategory
 
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
-
-<h1>Index</h1>
-    @foreach (var parent in Model)
-    {
-            @foreach (var child in parent.Children)
-            {
-            }
-    }
+<link rel="stylesheet" href="~/css/Product.css" type="text/css" />
+<section>
+    <div class="page-title">
+        <h3>@Model.Name</h3>
+    </div>
+    <div class="products-page__content">
+        <div class="products-page__left-block">
+            <div class="product-list-filters__block">
+                <div class="item-filters">
+                    <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <p class="list-group-item list-group-item-action filters-title">
+                            Производители
+                        </p>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <div class="collapse-filters">
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">Xiaomi</label>
+                            </li>
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">Realmi</label>
+                            </li>
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">Samsung</label>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-filters">
+                    <a data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <p class="list-group-item list-group-item-action filters-title">
+                            Цены
+                        </p>
+                    </a>
+                    <div class="collapse" id="collapseExample1">
+                        <div class="card-filters">
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">5000-10000</label>
+                            </li>
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">10000-20000</label>
+                            </li>
+                            <li class="list-group-item list-group-item-action filters-ditails">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">20000-50000</label>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="products-page_right-block">
+            <div class="top-filters__block">
+                <div class="top-filters-item">
+                    <div class="top-filters-name">
+                        <span>Сортировка по:</span>
+                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
+                        <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Сначала дорогие
+                                    </label>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Сначала недорогие
+                                    </label>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="top-filters-item">
+                    <div class="top-filters-name">
+                        <span>Сортировка по:</span>
+                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">Другое</a>
+                        <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefaul" id="flexRadioDefault3">
+                                    <label class="form-check-label" for="flexRadioDefault3">
+                                        Наименованию
+                                    </label>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefaul" id="flexRadioDefault4">
+                                    <label class="form-check-label" for="flexRadioDefault4">
+                                        Популярности
+                                    </label>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.Products)
+        </div>
+    </div>
+    @await Component.InvokeAsync("Swiper", new { nameCategory = "Смарт часы" })
+</section>

@@ -22,9 +22,9 @@
                                 <div class="subcatalog-header">@parent.Name</div>
                                 @foreach (ProductCategory child in parent.Children)
                                 {
-                                    <a>
+                                    <li><a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
                                         @child.Name
-                                    </a>
+                                    </a></li>
                                 }
 
                             </div>

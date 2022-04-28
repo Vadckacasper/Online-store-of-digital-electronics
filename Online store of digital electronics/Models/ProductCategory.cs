@@ -25,12 +25,12 @@ namespace Online_store_of_digital_electronics.Models
         public virtual ICollection<ProductCategory> Children { get; set; }
 
         // Продукты в категории.
-        public ICollection<RelationshipProductCategory> RelationshipProducts { get; set; }
+        public ICollection<Products> Products { get; set; }
 
         public ProductCategory()
         {
             Children = new List<ProductCategory>();
-            RelationshipProducts = new List<RelationshipProductCategory>();
+            Products = new List<Products>();
         }
         public List<ProductCategory> GetCatalog(List<ProductCategory> AllCategories)
         {

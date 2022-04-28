@@ -1,40 +1,54 @@
 ﻿
-<nav class="navbar navbar-expand-lg navbar-light border-bottom">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Калинин</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
-                <li class="nav-item">
-                    <a class="nav-link active main-link" role="button" data-bs-toggle="offcanvas" href="#offcanvasTop" aria-controls="offcanvasTop">
-                        <span class="navbar-toggler-icon"></span> Каталог
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active main-link" asp-area="" asp-controller="Manufacturers" asp-action="Index">Производители</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#"><i class="fa-solid fa-user"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Авторизация</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Buyers" asp-action="Index">Регистрация</a></li>
-                    </ul>
-                </li>
-            </ul>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Калинин</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
+                    <li class="nav-item">
+                        <a class="nav-link active main-link" role="button" data-bs-toggle="offcanvas" href="#offcanvasTop" aria-controls="offcanvasTop">
+                            <span class="navbar-toggler-icon"></span> Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                            <button class="btn btn-outline-primary" type="submit">Найти</button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
+                    <li class="nav-item me-2">
+                        <div class="nav-icon">
+                            <a class="nav-link active" aria-current="page" asp-controller="Orders" asp-action="ShoppingСart">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">
+                            <div class="nav-icon"><i class="fa-solid fa-user"></i></div>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Authentication">
+                                    Авторизация
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Registration">
+                                    Регистрация
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>

@@ -3,8 +3,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="~/css/home.css" type="text/css" />
-@await Html.PartialAsync("~/Views/Products/index.cshtml", Model.Products)
 <h1>Главная страница</h1>
-@await Html.PartialAsync("~/Views/Shared/_HomeCarousel.cshtml")
+@await Html.PartialAsync("~/Views/Home/_HomeCarousel.cshtml")
 
+@await Html.PartialAsync("~/Views/Shared/_card_category.cshtml")
+
+@await Component.InvokeAsync("Swiper", new { nameCategory = "Смартфоны" })
+@await Component.InvokeAsync("Swiper", new { nameCategory = "Смарт часы" })

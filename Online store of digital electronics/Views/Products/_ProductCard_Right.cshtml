@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Online_store_of_digital_electronics.Models.Products>
+
+<div class="product-list__block">
+    @foreach (Products product in Model)
+    {
+        <div class="product-card__block">
+            <div class="card-img"><img src="@product.Image" class="img-fluid rounded-start" alt="..."><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product"></a></div>
+            <div class="card-ditails">
+                <div class="card-name">
+                    <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.Name</a></h4>
+                </div>
+                <div class="card-description">
+                    <p class="text-wrap">@product.Description</p>
+                </div>
+            </div>
+            <div class="card-button ">
+                <div class="card-price float-start">
+                    <div class="product-price"> @product.Price₽ <small>17999₽</small></div>
+                </div>
+                <div class="card-button-buy float-start"> <a href="#" class="btn btn-primary">Купить</a></div>
+
+            </div>
+        </div>
+    }
+</div>
