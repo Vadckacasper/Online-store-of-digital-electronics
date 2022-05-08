@@ -1,0 +1,84 @@
+﻿@model Online_store_of_digital_electronics.ViewModel.RegisterViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-11">
+                        <div class="text-black">
+                            <div class="card-body p-md-5">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Регистрация</p>
+                                        
+                                        <form method="post" asp-controller="Account" asp-action="Register" class="mx-1 mx-md-4">
+                                            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                                                <li class="nav-item m-1" role="presentation">
+                                                    <button type="button" class="nav-link btn-reg-aut" data-bs-toggle="modal" data-bs-target="#Authentication">Вход</button>
+                                                </li>
+                                                <li class="nav-item m-1" role="presentation">
+                                                    <a class="nav-link active btn-reg-aut">Регистрация</a>
+                                                </li>
+                                            </ul>
+                                            <div asp-validation-summary="ModelOnly"></div>
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label asp-for="Name"></label><br />
+                                                    <input asp-for="Name" type="text" id="formRegName" class="form-control" placeholder="Ваше имя" aria-label="Ваше имя" />
+                                                    <span asp-validation-for="Name"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label asp-for="Email"></label><br />
+                                                    <input asp-for="Email" type="email" id="formRegLogin" class="form-control" placeholder="Ваша электронная почта" aria-label="Ваша электронная почта" />
+                                                    <span asp-validation-for="Email"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    
+                                                    <input asp-for="Password" type="password" id="formRegPassword" class="form-control" placeholder="Пароль" aria-label="Пароль" />
+                                                    <span asp-validation-for="Password"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label asp-for="PasswordConfirm"></label><br />
+                                                    <input asp-for="PasswordConfirm" type="password" id="formRegRassword2" class="form-control" placeholder="Повторите пароль" aria-label="Повторите пароль" />
+                                                    <span asp-validation-for="PasswordConfirm"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-check d-flex justify-content-center mb-5">
+                                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                                <label class="form-check-label" for="form2Example3">
+                                                    Я согласен со всеми заявлениями в
+                                                    <a href="#!">Условиях предоставления услуг</a>
+                                                </label>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                                <input type="submit" class="btn btn-primary btn-lg" value="Регистрация" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</section>          

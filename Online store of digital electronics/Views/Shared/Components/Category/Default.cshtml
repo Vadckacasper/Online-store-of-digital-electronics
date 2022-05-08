@@ -8,7 +8,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach (ProductCategory item in Model)
                         {
-                            <li class="list-group-item list-group-item-action catalog-item" data-bs-toggle="collapse" href="#Catalog_@item.Name.ToString()" role="button" aria-controls="Catalog_@item.Name.ToString()">  @item.Name</li>
+                            <li class="list-group-item list-group-item-action catalog-item" data-bs-toggle="collapse" href="#Catalog_@item.Id_сategory.ToString()" role="button" aria-controls="Catalog_@item.Id_сategory.ToString()">  @item.Name</li>
                         }
                     </ul>
                 </div>
@@ -16,7 +16,7 @@
             <div class="col-9 subcatalog" id="subcatalog">
                 @foreach (ProductCategory parent in Model)
                 {
-                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@parent.Name.ToString()">
+                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@parent.Id_сategory.ToString()">
                         <div class="col-3 m-3">
                             <div class="subcatalog-item">
                                 <div class="subcatalog-header">@parent.Name</div>

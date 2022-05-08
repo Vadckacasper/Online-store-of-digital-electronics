@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +15,13 @@ namespace Online_store_of_digital_electronics.Controlles
     public class OrdersController : Controller
     {
         private readonly ShopContext _context;
+        private readonly UserManager<Buyers> _userManager;
+        private readonly SignInManager<Buyers> _signInManager;
 
-        public OrdersController(ShopContext context)
+        public OrdersController(ShopContext context, UserManager<Buyers> userManager, SignInManager<Buyers> signInManager)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
 
@@ -25,11 +31,43 @@ namespace Online_store_of_digital_electronics.Controlles
             return View(await _context.orders.ToListAsync());
         }
         public IActionResult ShoppingСart()
-        {
-            var order = _context.orders.Where(o => o.Id_buyer==1);
-            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Id_buyer == 1 && o.Status == "Оформление");
+        {            
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Buyers.Id == id && o.Status == "Оформление");
             return View(Cart);
         }
+
+        [HttpPost]
+        public ActionResult AddToBasket(int id)
+        {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            if (Cart == null)
+            {
+                Buyers buyers = _context.buyers.FirstOrDefault(b => b.Id == BuyersID);
+                Cart = new Orders() { Status = "Оформление", Buyers = buyers };
+                _context.orders.Add(Cart);
+            }
+
+            Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
+            Cart.Products.Add(product);
+            _context.SaveChanges();
+            return Json(new { status = true });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteToBasket(int id)
+        {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
+            Cart.Products.Remove(product);
+
+            _context.SaveChanges();
+            return Json(new { status = true });
+        }
+
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -7,6 +7,5 @@
 @await Html.PartialAsync("~/Views/Home/_HomeCarousel.cshtml")
 
 @await Html.PartialAsync("~/Views/Shared/_card_category.cshtml")
-
-@await Component.InvokeAsync("Swiper", new { nameCategory = "Смартфоны" })
-@await Component.InvokeAsync("Swiper", new { nameCategory = "Смарт часы" })
+@await Component.InvokeAsync("Swiper", "Смартфоны")
+@await Component.InvokeAsync("Swiper", "Смарт часы")

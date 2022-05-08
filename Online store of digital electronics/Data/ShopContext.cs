@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Online_store_of_digital_electronics.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace Online_store_of_digital_electronics.Data
 {
-    public class ShopContext : DbContext
+    public class ShopContext : IdentityDbContext<Buyers>
     {
         public ShopContext()
         {
@@ -25,6 +26,8 @@ namespace Online_store_of_digital_electronics.Data
             modelBuilder.Entity<Manufacturers>().ToTable("Manufacturers");
             modelBuilder.Entity<Orders>().ToTable("Orders");
             modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
+            modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

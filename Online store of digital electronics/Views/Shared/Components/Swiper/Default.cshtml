@@ -21,13 +21,31 @@
                             </div>
                             <div class="product-details-button  d-flex justify-content-between align-items-center">
                                 <div class="product-price">@products.Price₽ <small>@{decimal x = products.Price + 2000;}@x₽</small></div>
-                                <a href="#" class="btn btn-primary">В корзину</a>
+                                <form action="@Url.Action("addToBasket","Home")" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" id="Id" name="Id" value="1" />
+                                    <button type="button" onclick="submitData(@products.Id_product)" class="btn btn-primary">
+                                        <span class="fa fa-shopping-cart">В корзину</span>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                                    }
+                }
             </div>
         </div>
     </div>
 
 </section>
+
+
+<script>
+    function submitData(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("addToBasket","Orders")',
+            data: { "id": id }
+            }).done(function (data) {
+                console.log(data.msg);
+            });
+    }
+</script>

@@ -5,6 +5,7 @@ using Online_store_of_digital_electronics.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Online_store_of_digital_electronics.Controlles
@@ -23,5 +24,6 @@ namespace Online_store_of_digital_electronics.Controlles
             HomeViewModel model = new HomeViewModel(_context.products.ToList(), productCategory.GetCatalog(_context.productCategories.ToList()));
             return View(model);
         }
+
     }
 }

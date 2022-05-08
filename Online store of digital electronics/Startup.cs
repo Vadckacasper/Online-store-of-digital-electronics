@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Online_store_of_digital_electronics.Models;
 
 namespace Online_store_of_digital_electronics
 {
@@ -29,10 +30,12 @@ namespace Online_store_of_digital_electronics
             });
             services.AddControllersWithViews();
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentityCore<IdentityUser>(
-        options => options.SignIn.RequireConfirmedAccount = true)
-        .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<ShopContext>();
+            services.AddIdentity<Buyers, IdentityRole>().AddEntityFrameworkStores<ShopContext>();
+
+            //    services.AddIdentityCore<IdentityUser>(
+            //options => options.SignIn.RequireConfirmedAccount = true)
+            //.AddRoles<IdentityRole>()
+            //.AddEntityFrameworkStores<ShopContext>();
             services.AddMvc();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

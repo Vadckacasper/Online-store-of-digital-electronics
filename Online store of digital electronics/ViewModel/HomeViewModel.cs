@@ -10,7 +10,8 @@ namespace Online_store_of_digital_electronics.ViewModel
     {
         public IEnumerable<Products> Products;
         public IEnumerable<ProductCategory> ProductCategories;
-
+        public LoginViewModel Login { get; set; }
+        public RegisterViewModel Register { get; set; }
         public HomeViewModel(List<Products> products, List<ProductCategory> productCategories)
         {
             Products = products;

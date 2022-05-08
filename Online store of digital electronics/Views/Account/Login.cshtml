@@ -1,0 +1,78 @@
+﻿@model Online_store_of_digital_electronics.ViewModel.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+            <div class="text-black">
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-lg-7 col-xl-6">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image">
+                        </div>
+                        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Вход</p>
+                            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                                <li class="nav-item m-1" role="presentation">
+                                    <a class="nav-link active btn-reg-aut">Вход</a>
+                                </li>
+                                <li class="nav-item m-1" role="presentation">
+                                    <button type="button" class="nav-link btn-reg-aut" data-bs-toggle="modal" data-bs-target="#Registration">
+                                        Регистрация
+                                    </button>
+                                </li>
+                            </ul>
+                            <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+                                <div asp-validation-summary="ModelOnly"></div>
+
+                                <div class="form-outline mb-4">
+                                    <label asp-for="Email"></label><br />
+                                    <input asp-for="Email" type="email" id="form1AuthLogin" class="form-control form-control-lg" placeholder="Эл. адрес" aria-label="Эл. адрес" />
+                                    <span asp-validation-for="Email"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label asp-for="Password"></label><br />
+                                    <input asp-for="Password" type="password" id="formAuthPassword" class="form-control form-control-lg" placeholder="Пароль" aria-label="Пароль" />
+                                    <span asp-validation-for="Password"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-around align-items-center mb-4">
+                                    <div class="form-check">
+                                        <label asp-for="RememberMe"></label><br />
+                                        <input asp-for="RememberMe" class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+
+                                        <label class="form-check-label" for="form1Example3">
+                                            Запомнить
+                                            меня
+                                        </label>
+                                    </div>
+                                    <a href="#!">Забыли пароль?</a>
+                                </div>
+
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <input type="submit" class="btn btn-primary btn-lg" value="Вход" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<script>
+const { get } = require("jquery");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Register")",
+                        dataType: "json",
+                        data: {model = }
+                        success:
+                    })
+</script>

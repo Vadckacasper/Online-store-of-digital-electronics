@@ -5,18 +5,23 @@
 @{
     int number = 0;
     decimal SumPrice = 0;
- }
+}
 <section>
-    <h2>Корзина</h2>
     <div class="basket-page__content">
         <div class="basket-page__left-block">
+            @if (Model == null)
+            {
+                <h2>Корзина Пуста</h2>
+            }
+            else
+            {
+
                 @foreach (Products product in Model.Products)
                 {
-                   
-                        number++;
-                        SumPrice += product.Price;
-                    
-                    <div class="card rounded-3 mb-4">
+                    number++;
+                    SumPrice += product.Price;
+
+                    <div class="card rounded-3 mb-4" id="@product.Id_product">
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-3 col-lg-3 col-xl-3">
@@ -41,17 +46,19 @@
                                     <h5 class="mb-0">
                                         <div class="product-price"> @product.Price₽ <small>@{decimal x = product.Price + 2000;}@x₽</small></div>
                                     </h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a class="text-danger"><i class="fas fa-trash fa-lg"><input type="hidden" asp-for="@Model.Id_order" /></i></a>
+                                    <form action="@Url.Action("addToBasket", "Home")" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" id="Id" name="Id" value="1" />
+                                        <button type="button" onclick="submitData(@product.Id_product)">
+                                            <i class="fas fa-trash fa-lg nav-icon"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-            
-        </div>
 
+                                            }}
+        </div>
         <div class="basket-page__right-block">
             <div class="card mt-1">
                 <div class="card-header py-3">
@@ -84,5 +91,19 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>
+
+<script>
+    function submitData(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeleteToBasket", "Orders")',
+            data: { "id": id }
+        }).done(function (data) {
+                @{number--;}
+             
+                    var div = document.getElementById(id);
+                    div.remove();
+            });
+    }
+</script>
