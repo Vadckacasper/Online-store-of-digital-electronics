@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Online_store_of_digital_electronics.Data;
 using Online_store_of_digital_electronics.Models;
+using Online_store_of_digital_electronics.ViewModel;
 
 namespace Online_store_of_digital_electronics.Controlles
 {
@@ -30,12 +31,6 @@ namespace Online_store_of_digital_electronics.Controlles
         {
             return View(await _context.orders.ToListAsync());
         }
-        public IActionResult ShoppingСart()
-        {            
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Buyers.Id == id && o.Status == "Оформление");
-            return View(Cart);
-        }
 
         [HttpPost]
         public ActionResult AddToBasket(int id)
@@ -50,22 +45,31 @@ namespace Online_store_of_digital_electronics.Controlles
             }
 
             Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
-            Cart.Products.Add(product);
-            _context.SaveChanges();
-            return Json(new { status = true });
+
+            if (Cart.Products.Contains(product) == true)
+            {
+                Cart.Products.Add(product);
+                _context.SaveChanges();
+            }
+            return PartialView("~/Views/Shared/_ProductСounter.cshtml");
         }
 
         [HttpPost]
-        public ActionResult DeleteToBasket(int id)
+        public IActionResult DeleteToBasket(int id)
         {
             string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
             Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
             Cart.Products.Remove(product);
-
             _context.SaveChanges();
-            return Json(new { status = true });
+            MakingOrderViewModel making = new MakingOrderViewModel();
+            foreach(var prod in Cart.Products)
+            {
+                making.SumPriceProduct += prod.Price;
+                making.NumberProducts++;
+            }
+            return PartialView("~/Views/Orders/_MakingOrder.cshtml", making);
         }
 
         // GET: Orders/Details/5

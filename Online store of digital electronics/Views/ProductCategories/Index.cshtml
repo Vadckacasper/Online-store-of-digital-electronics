@@ -65,54 +65,50 @@
                 <div class="top-filters-item">
                     <div class="top-filters-name">
                         <span>Сортировка по:</span>
-                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
-                        <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
+                        <form id="form" method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetFilterProduct","ProductCategories")">
+                            <button id="submit" type="submit" style="display:none" data-rad="flexRadioDefault1">
+                            </button>
+                            <input type="hidden" name="id_category" value="@Model.Id_сategory">
+                            <a class="nav-link active dropdown-toggle" id="simple" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
+                            <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="1" id="flexRadioDefault1">
+                                    <label id="1" class="form-check-label" for="flexRadioDefault1">
                                         Сначала дорогие
                                     </label>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="2" id="flexRadioDefault2">
+                                    <label id="2" class="form-check-label" for="flexRadioDefault2">
                                         Сначала недорогие
                                     </label>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="top-filters-item">
-                    <div class="top-filters-name">
-                        <span>Сортировка по:</span>
-                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">Другое</a>
-                        <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefaul" id="flexRadioDefault3">
-                                    <label class="form-check-label" for="flexRadioDefault3">
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="3" id="flexRadioDefault3">
+                                    <label id="3" class="form-check-label" for="flexRadioDefault3">
                                         Наименованию
                                     </label>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefaul" id="flexRadioDefault4">
-                                    <label class="form-check-label" for="flexRadioDefault4">
-                                        Популярности
-                                    </label>
-                                </a>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </form>
                     </div>
                 </div>
             </div>
-            @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.Products)
+            <div id="panel">
+                @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.Products)
+            </div>
         </div>
     </div>
     @await Component.InvokeAsync("Swiper", new { nameCategory = "Смарт часы" })
 </section>
+
+<script>
+    function sub() {
+        document.querySelector("#submit").click();
+    }
+
+    function UpdatingSorting() {
+        var id = document.querySelector('input[name="id"]:checked').value;
+        document.getElementById("simple").innerHTML = document.getElementById(id).in;
+    }
+</script>

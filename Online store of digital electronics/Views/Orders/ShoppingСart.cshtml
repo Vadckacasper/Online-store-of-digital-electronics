@@ -32,23 +32,15 @@
                                     <p>@product.Description</p>
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-
-                                    <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" />
-
-                                    <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                                    @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml")
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     <h5 class="mb-0">
                                         <div class="product-price"> @product.Price₽ <small>@{decimal x = product.Price + 2000;}@x₽</small></div>
                                     </h5>
-                                    <form action="@Url.Action("addToBasket", "Home")" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" id="Id" name="Id" value="1" />
-                                        <button type="button" onclick="submitData(@product.Id_product)">
+                                    <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="DeleteCard(@product.Id_product)" data-ajax-url="@Url.Action("DeleteToBasket","Orders")">
+                                        <input type="hidden" id="Id" name="Id" value="@product.Id_product" />
+                                        <button class="button_none" type="submit">
                                             <i class="fas fa-trash fa-lg nav-icon"></i>
                                         </button>
                                     </form>
@@ -57,9 +49,9 @@
                         </div>
                     </div>
 
-                                            }}
+                }}
         </div>
-        <div class="basket-page__right-block">
+        <div class="basket-page__right-block" id="panel">
             <div class="card mt-1">
                 <div class="card-header py-3">
                     <h5 class="mb-0">Краткие сведения</h5>
@@ -91,19 +83,15 @@
                 </div>
             </div>
         </div>
+    </div>
+
 </section>
 
 <script>
-    function submitData(id) {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("DeleteToBasket", "Orders")',
-            data: { "id": id }
-        }).done(function (data) {
-                @{number--;}
-             
-                    var div = document.getElementById(id);
-                    div.remove();
-            });
+    function DeleteCard(id) {
+        var div = document.getElementById(id);
+        div.remove();
     }
 </script>
+
+

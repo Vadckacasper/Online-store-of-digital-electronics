@@ -1,0 +1,9 @@
+﻿@model Online_store_of_digital_electronics.Models.Products
+<div id="@Model.Id_product">
+    <form method="get" data-ajax="true" data-ajax-method="post" data-ajax-update="#@Model.Id_product" data-ajax-mode='replace' data-ajax-url="@Url.Action("AddToBasket","Orders")">
+        <input type="hidden" id="Id" name="Id" value="@Model.Id_product" />
+        <button class="btn btn-primary" type="submit">
+            <span class="fa fa-shopping-cart">В корзину</span>
+        </button>
+    </form>
+</div>

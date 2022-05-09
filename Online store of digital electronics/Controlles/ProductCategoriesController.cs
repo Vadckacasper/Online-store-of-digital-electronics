@@ -19,6 +19,24 @@ namespace Online_store_of_digital_electronics.Controlles
             _context = context;
         }
 
+        public IActionResult GetFilterProduct(int id_category, int Sort)
+        {
+
+            ProductCategory productCategory;
+            if(Sort == 1)
+            {
+                productCategory = _context.productCategories.Include(p => p.Products.OrderBy(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
+            }
+            else if(Sort == 2)
+            {
+                productCategory = _context.productCategories.Include(p => p.Products.OrderByDescending(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
+            }else 
+            {
+                productCategory = _context.productCategories.Include(p => p.Products.OrderByDescending(p => p.Name)).FirstOrDefault(c => c.Id_сategory == id_category);
+            }
+            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", productCategory.Products);
+        }
+
         // GET: ProductCategoriesTable
         public async Task<IActionResult> Index(int? id)
         {
@@ -50,129 +68,6 @@ namespace Online_store_of_digital_electronics.Controlles
             return PartialView(productCategories);
         }
 
-        // GET: ProductCategoriesTable/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productCategory = await _context.productCategories
-                .FirstOrDefaultAsync(m => m.Id_сategory == id);
-            if (productCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(productCategory);
-        }
-
-        // GET: ProductCategoriesTable/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductCategoriesTable/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_сategory,Name,Image,Description,Available")] ProductCategory productCategory)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(productCategory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(productCategory);
-        }
-
-        // GET: ProductCategoriesTable/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productCategory = await _context.productCategories.FindAsync(id);
-            if (productCategory == null)
-            {
-                return NotFound();
-            }
-            return View(productCategory);
-        }
-
-        // POST: ProductCategoriesTable/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_сategory,Name,Image,Description,Available")] ProductCategory productCategory)
-        {
-            if (id != productCategory.Id_сategory)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(productCategory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductCategoryExists(productCategory.Id_сategory))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(productCategory);
-        }
-
-        // GET: ProductCategoriesTable/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productCategory = await _context.productCategories
-                .FirstOrDefaultAsync(m => m.Id_сategory == id);
-            if (productCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(productCategory);
-        }
-
-        // POST: ProductCategoriesTable/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var productCategory = await _context.productCategories.FindAsync(id);
-            _context.productCategories.Remove(productCategory);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProductCategoryExists(int id)
-        {
-            return _context.productCategories.Any(e => e.Id_сategory == id);
-        }
+       
     }
 }

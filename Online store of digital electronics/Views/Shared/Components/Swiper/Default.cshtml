@@ -8,25 +8,20 @@
 
         <div class="main-slider swiper">
             <div class="swiper-wrapper">
-                @foreach (Products products in Model.Products)
+                @foreach (Products product in Model.Products)
                 {
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="product-img">
-                                <a asp-controller="Products" asp-action="Details" asp-route-id="@products.Id_product"><img src="@products.Image" class="card-img-top" alt="..."></a>
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product"><img src="@product.Image" class="card-img-top" alt="..."></a>
                             </div>
                             <div class="product-details">
-                                <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@products.Id_product">@products.Name</a></h4>
-                                <p class="text-wrap">@products.Description</p>
+                                <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.Name</a></h4>
+                                <p class="text-wrap">@product.Description</p>
                             </div>
                             <div class="product-details-button  d-flex justify-content-between align-items-center">
-                                <div class="product-price">@products.Price₽ <small>@{decimal x = products.Price + 2000;}@x₽</small></div>
-                                <form action="@Url.Action("addToBasket","Home")" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" id="Id" name="Id" value="1" />
-                                    <button type="button" onclick="submitData(@products.Id_product)" class="btn btn-primary">
-                                        <span class="fa fa-shopping-cart">В корзину</span>
-                                    </button>
-                                </form>
+                                <div class="product-price">@product.Price₽ <small>@{decimal x = product.Price + 2000;}@x₽</small></div>
+                                @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)
                             </div>
                         </div>
                     </div>
