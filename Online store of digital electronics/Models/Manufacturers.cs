@@ -19,6 +19,7 @@ namespace Online_store_of_digital_electronics.Models
         public string Logo { get; set; }
         public int Number_products { get; set; }
 
+        public ProductCategory ProductCategory { get; set; }
         public ICollection<Products> Products { get; set; }
         public Manufacturers()
         {

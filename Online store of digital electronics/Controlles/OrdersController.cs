@@ -27,9 +27,12 @@ namespace Online_store_of_digital_electronics.Controlles
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult ShoppingСart()
         {
-            return View(await _context.orders.ToListAsync());
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.Include(o => o.ProductOrder).ThenInclude(p => p.Product).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            return View(Cart.ProductOrder);
         }
 
         [HttpPost]
@@ -42,16 +45,20 @@ namespace Online_store_of_digital_electronics.Controlles
                 Buyers buyers = _context.buyers.FirstOrDefault(b => b.Id == BuyersID);
                 Cart = new Orders() { Status = "Оформление", Buyers = buyers };
                 _context.orders.Add(Cart);
-            }
-
-            Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
-
-            if (Cart.Products.Contains(product) == true)
+            }   
+            
+            ProductOrder productOrder = _context.productOrders.FirstOrDefault(po => po.Id_product == id && po.Id_order == Cart.Id_order);
+            if (productOrder != null)
             {
-                Cart.Products.Add(product);
-                _context.SaveChanges();
+                productOrder.NumberProductsTheOrder++;
+            }else
+            {
+                productOrder = new ProductOrder() { Id_order = Cart.Id_order, Id_product =id, NumberProductsTheOrder = 1, Product = _context.products.FirstOrDefault(p => p.Id_product == id), Order = Cart };
+                Cart.ProductOrder.Add(productOrder);
             }
-            return PartialView("~/Views/Shared/_ProductСounter.cshtml");
+           _context.SaveChanges();
+            
+            return PartialView("~/Views/Shared/_ProductСounter.cshtml", productOrder);
         }
 
         [HttpPost]
@@ -59,15 +66,16 @@ namespace Online_store_of_digital_electronics.Controlles
         {
             string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var Cart = _context.orders.Include(p => p.Products).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
-            Products product = _context.products.FirstOrDefault(p => p.Id_product == id);
-            Cart.Products.Remove(product);
+            Orders Cart = _context.orders.Include(p => p.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+
+            var productOrders = _context.productOrders.Include(p => p.Product).Where(po => po.Id_order == Cart.Id_order);
+            _context.productOrders.Remove(productOrders.FirstOrDefault(po=> po.Id_product == id));
             _context.SaveChanges();
             MakingOrderViewModel making = new MakingOrderViewModel();
-            foreach(var prod in Cart.Products)
+            foreach (var prod in productOrders)
             {
-                making.SumPriceProduct += prod.Price;
-                making.NumberProducts++;
+                making.SumPriceProduct += prod.Product.Price * prod.NumberProductsTheOrder;
+                making.NumberProducts += prod.NumberProductsTheOrder;
             }
             return PartialView("~/Views/Orders/_MakingOrder.cshtml", making);
         }

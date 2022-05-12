@@ -18,17 +18,18 @@ namespace Online_store_of_digital_electronics.Models
         public string Image { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public byte Sale { get; set; }
         public bool Available { get; set; }
         public string Specifications { get; set; }
         public double Rating { get; set; }
         public Manufacturers manufacturer { get; set; }
         //Категории, в которых есть данный продукт.
         public ICollection<ProductCategory> Categories { get; set; }
-        public ICollection<Orders> Order { get; set; }
+        public ICollection<ProductOrder> ProductOrder { get; set; }
         public Products()
         {
             Categories = new List<ProductCategory>();
-            Order = new List<Orders>();
+            ProductOrder = new List<ProductOrder>();
         }
     }
 }

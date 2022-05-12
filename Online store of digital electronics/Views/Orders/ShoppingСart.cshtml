@@ -1,4 +1,4 @@
-﻿@model Orders
+﻿@model IEnumerable<ProductOrder>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,27 +16,27 @@
             else
             {
 
-                @foreach (Products product in Model.Products)
+                @foreach (ProductOrder product in Model)
                 {
-                    number++;
-                    SumPrice += product.Price;
+                    number+= product.NumberProductsTheOrder;
+                    SumPrice += product.Product.Price * product.NumberProductsTheOrder;
 
                     <div class="card rounded-3 mb-4" id="@product.Id_product">
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <img src="@product.Image" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                    <img src="@product.Product.Image" class="img-fluid rounded-3" alt="Cotton T-shirt">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-4">
-                                    <p class="lead fw-normal mb-2">@product.Name</p>
-                                    <p>@product.Description</p>
+                                    <p class="lead fw-normal mb-2">@product.Product.Name</p>
+                                    <p>@product.Product.Description</p>
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml")
+                                    @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml", product)
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     <h5 class="mb-0">
-                                        <div class="product-price"> @product.Price₽ <small>@{decimal x = product.Price + 2000;}@x₽</small></div>
+                                        <div class="product-price"> @product.Product.Price₽ <small>@{decimal x = product.Product.Price + 2000;}@x₽</small></div>
                                     </h5>
                                     <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="DeleteCard(@product.Id_product)" data-ajax-url="@Url.Action("DeleteToBasket","Orders")">
                                         <input type="hidden" id="Id" name="Id" value="@product.Id_product" />

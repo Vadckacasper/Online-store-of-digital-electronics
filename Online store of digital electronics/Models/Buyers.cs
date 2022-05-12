@@ -11,11 +11,9 @@ namespace Online_store_of_digital_electronics.Models
     [Table("Buyers")]
     public class Buyers: IdentityUser
     {
-        [Key]
-        public int Id_buyer { get; set; }
+        public string FullName { get; set; }
         public string IP_address { get; set; }
         public string Status { get; set; }
-        public string Sale { get; set; }
         public string Geofence { get; set; }
         public ICollection<Orders> Orders { get; set; }
     }

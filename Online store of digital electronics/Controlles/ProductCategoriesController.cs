@@ -19,15 +19,15 @@ namespace Online_store_of_digital_electronics.Controlles
             _context = context;
         }
 
-        public IActionResult GetFilterProduct(int id_category, int Sort)
+        [HttpGet]
+        public IActionResult GetSortProduct(int id_category, string SortID)
         {
-
             ProductCategory productCategory;
-            if(Sort == 1)
+            if (SortID == "PriceOrderBy")
             {
                 productCategory = _context.productCategories.Include(p => p.Products.OrderBy(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
             }
-            else if(Sort == 2)
+            else if(SortID == "PriceOrderByDes")
             {
                 productCategory = _context.productCategories.Include(p => p.Products.OrderByDescending(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
             }else 
@@ -36,7 +36,25 @@ namespace Online_store_of_digital_electronics.Controlles
             }
             return PartialView("~/Views/Products/_ProductCard_Right.cshtml", productCategory.Products);
         }
+        [HttpGet]
+        public IActionResult GetFilterProduct(int id_category, int[] Id_manufacturers, decimal minPrice, decimal maxPrice)
+        {
+            List<Products> Products = new List<Products>();
+            var productCategory = _context.productCategories.Include(p => p.Products).FirstOrDefault(c => c.Id_сategory == id_category);
 
+            foreach(var prod in productCategory.Products)
+            {
+                
+                for(int i = 0; i < Id_manufacturers.Length; i++)
+                {
+                    if(prod.Id_manufacturer == Id_manufacturers[i] && prod.Price >= minPrice && prod.Price <= maxPrice)
+                    {
+                        Products.Add(prod);
+                    }
+                }
+            }
+            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", Products);
+        }
         // GET: ProductCategoriesTable
         public async Task<IActionResult> Index(int? id)
         {
@@ -50,7 +68,7 @@ namespace Online_store_of_digital_electronics.Controlles
             {
                 return NotFound();
             }
-            productCategory = _context.productCategories.Include(p => p.Products).FirstOrDefault(c => c.Id_сategory == id);
+            productCategory = _context.productCategories.Include(p => p.Products).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
             return View(productCategory);
         }
 

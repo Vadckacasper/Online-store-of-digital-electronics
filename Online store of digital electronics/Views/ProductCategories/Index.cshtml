@@ -10,82 +10,81 @@
         <h3>@Model.Name</h3>
     </div>
     <div class="products-page__content">
+
         <div class="products-page__left-block">
             <div class="product-list-filters__block">
-                <div class="item-filters">
-                    <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        <p class="list-group-item list-group-item-action filters-title">
-                            Производители
-                        </p>
-                    </a>
-                    <div class="collapse" id="collapseExample">
-                        <div class="collapse-filters">
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">Xiaomi</label>
-                            </li>
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">Realmi</label>
-                            </li>
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">Samsung</label>
-                            </li>
+                <form method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-url="@Url.Action("GetFilterProduct","ProductCategories")">
+                    <button id="Filterssubmit" type="submit" class="btn btn-outline-primary">
+                        Показать
+                    </button>
+                    <input type="hidden" name="id_category" value="@Model.Id_сategory">
+                    <div class="item-filters">
+                        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <p class="list-group-item list-group-item-action filters-title">
+                                Производители
+                            </p>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <div class="collapse-filters">
+                                @foreach (Manufacturers manufacturers in Model.Manufacturers)
+                                {
+                                    <li class="list-group-item list-group-item-action filters-ditails">
+                                        <input class="form-check-input" type="checkbox" name="Id_manufacturers" value="@manufacturers.Id_manufacturer" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">@manufacturers.Name</label>
+                                    </li>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="item-filters">
-                    <a data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        <p class="list-group-item list-group-item-action filters-title">
-                            Цены
-                        </p>
-                    </a>
-                    <div class="collapse" id="collapseExample1">
-                        <div class="card-filters">
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">5000-10000</label>
-                            </li>
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">10000-20000</label>
-                            </li>
-                            <li class="list-group-item list-group-item-action filters-ditails">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">20000-50000</label>
-                            </li>
+                    <div class="item-filters">
+                        <a data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <p class="list-group-item list-group-item-action filters-title">
+                                Цены
+                            </p>
+                        </a>
+                        <div class="collapse" id="collapseExample1">
+                            <div class="card-filters">
+                                <li class="list-group-item list-group-item-action filters-ditails">
+                                    <div class="input-group mb-3">
+                                        <input min="0" class="form-control" onchange="min()" type="number" name="minPrice" id="minPriceInput" placeholder="От" />
+                                        <span class="input-group-text">-</span>
+                                        <input min="0" class="form-control" type="number" name="maxPrice" id="maxPriceInput" placeholder="До" />
+                                    </div>                             
+                                </li>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
+
         </div>
+
         <div class="products-page_right-block">
             <div class="top-filters__block">
                 <div class="top-filters-item">
                     <div class="top-filters-name">
                         <span>Сортировка по:</span>
-                        <form id="form" method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetFilterProduct","ProductCategories")">
-                            <button id="submit" type="submit" style="display:none" data-rad="flexRadioDefault1">
+                        <form id="form" method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetSortProduct","ProductCategories")">
+                            <button id="submit" type="submit" style="display:none">
                             </button>
                             <input type="hidden" name="id_category" value="@Model.Id_сategory">
                             <a class="nav-link active dropdown-toggle" id="simple" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
                             <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="1" id="flexRadioDefault1">
-                                    <label id="1" class="form-check-label" for="flexRadioDefault1">
-                                        Сначала дорогие
-                                    </label>
-                                </li>
-                                <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="2" id="flexRadioDefault2">
-                                    <label id="2" class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="PriceOrderBy" id="flexRadioDefault1">
+                                    <label id="PriceOrderBy" class="form-check-label" for="flexRadioDefault1">
                                         Сначала недорогие
                                     </label>
                                 </li>
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="Sort" value="3" id="flexRadioDefault3">
-                                    <label id="3" class="form-check-label" for="flexRadioDefault3">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="PriceOrderByDes" id="flexRadioDefault2">
+                                    <label id="PriceOrderByDes" class="form-check-label" for="flexRadioDefault2">
+                                        Сначала дорогие
+                                    </label>
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="NameOrderBy" id="flexRadioDefault3">
+                                    <label id="NameOrderBy" class="form-check-label" for="flexRadioDefault3">
                                         Наименованию
                                     </label>
                                 </li>
@@ -108,7 +107,11 @@
     }
 
     function UpdatingSorting() {
-        var id = document.querySelector('input[name="id"]:checked').value;
-        document.getElementById("simple").innerHTML = document.getElementById(id).in;
+        var id = document.querySelector('input[name="SortID"]:checked').value;
+        document.getElementById("simple").innerHTML = document.getElementById(id).innerHTML;
+    }
+    function min() {
+        var id = document.getElementById("minPriceInput").value;
+        document.getElementById("maxPriceInput").min = id;
     }
 </script>

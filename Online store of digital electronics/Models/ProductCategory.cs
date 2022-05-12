@@ -26,11 +26,12 @@ namespace Online_store_of_digital_electronics.Models
 
         // Продукты в категории.
         public ICollection<Products> Products { get; set; }
-
+        public ICollection<Manufacturers> Manufacturers { get; set; }
         public ProductCategory()
         {
             Children = new List<ProductCategory>();
             Products = new List<Products>();
+            Manufacturers = new List<Manufacturers>();
         }
         public List<ProductCategory> GetCatalog(List<ProductCategory> AllCategories)
         {
@@ -43,12 +44,6 @@ namespace Online_store_of_digital_electronics.Models
                 productCategories.Add(parent);
             }
             return productCategories;
-        }
-
-        private List<ProductCategory> GetCheldren(ProductCategory parent)
-        {
-
-            return null;
         }
     }
 }

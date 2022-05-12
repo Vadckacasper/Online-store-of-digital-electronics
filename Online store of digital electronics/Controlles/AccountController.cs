@@ -30,7 +30,7 @@ namespace Online_store_of_digital_electronics.Controlles
         {
             if (ModelState.IsValid)
             {
-                Buyers user = new Buyers { Email = model.Email, UserName = model.Name, };
+                Buyers user = new Buyers { Email = model.Email, UserName = model.Email, };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -62,8 +62,7 @@ namespace Online_store_of_digital_electronics.Controlles
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению

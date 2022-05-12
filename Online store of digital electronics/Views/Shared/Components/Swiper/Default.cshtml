@@ -21,7 +21,21 @@
                             </div>
                             <div class="product-details-button  d-flex justify-content-between align-items-center">
                                 <div class="product-price">@product.Price₽ <small>@{decimal x = product.Price + 2000;}@x₽</small></div>
-                                @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)
+                                @{
+                                    if (product.ProductOrder.Count == 0)
+                                    {
+
+                                        @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)
+                                    }
+                                    else
+                                    {
+                                        foreach (ProductOrder productOrder in product.ProductOrder)
+                                        { 
+                                        @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml", product.ProductOrder.First())
+                                        }
+                                    }
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -31,16 +45,3 @@
     </div>
 
 </section>
-
-
-<script>
-    function submitData(id) {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("addToBasket","Orders")',
-            data: { "id": id }
-            }).done(function (data) {
-                console.log(data.msg);
-            });
-    }
-</script>

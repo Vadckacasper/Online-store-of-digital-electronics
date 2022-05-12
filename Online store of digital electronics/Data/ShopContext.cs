@@ -19,6 +19,7 @@ namespace Online_store_of_digital_electronics.Data
         public DbSet<Manufacturers> manufacturers { get; set; }
         public DbSet<Orders> orders { get; set; }
         public DbSet<ProductCategory> productCategories { get; set; }
+        public DbSet<ProductOrder> productOrders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Products>().ToTable("Products");
@@ -26,6 +27,7 @@ namespace Online_store_of_digital_electronics.Data
             modelBuilder.Entity<Manufacturers>().ToTable("Manufacturers");
             modelBuilder.Entity<Orders>().ToTable("Orders");
             modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
+            //modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
             modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
             base.OnModelCreating(modelBuilder);
         }

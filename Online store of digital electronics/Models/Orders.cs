@@ -12,21 +12,16 @@ namespace Online_store_of_digital_electronics.Models
     {
         [Key]
         public int Id_order { get; set; }
-        public int Id_product { get; set; }
-        public int Id_buyer { get; set; }
-        public int Number_products { get; set; }
-        public int Product_order { get; set; }
         public string Delivery_method { get; set; }
         public string Payment_method { get; set; }
         public string Status { get; set; }
         public string Order_name { get; set; }
         public string Comment { get; set; }
         public Buyers Buyers { get; set; }
-        public ICollection<Products> Products { get; set; }
-
+        public ICollection<ProductOrder> ProductOrder { get; set; }
         public Orders()
         {
-            Products = new List<Products>();
+            ProductOrder = new List<ProductOrder>();
         }
     }
 }

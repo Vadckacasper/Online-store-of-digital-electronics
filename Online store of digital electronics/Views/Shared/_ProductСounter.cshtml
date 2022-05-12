@@ -1,8 +1,9 @@
-﻿<button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+﻿@model ProductOrder
+<button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
     <i class="fas fa-minus"></i>
 </button>
 
-<input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" />
+<input id="form1" min="0" name="quantity" value="@Model.NumberProductsTheOrder" type="number" class="form-control form-control-sm" />
 
 <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
     <i class="fas fa-plus"></i>

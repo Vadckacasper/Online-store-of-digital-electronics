@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Online_store_of_digital_electronics.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Online_store_of_digital_electronics
 {
@@ -23,6 +24,8 @@ namespace Online_store_of_digital_electronics
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -31,19 +34,12 @@ namespace Online_store_of_digital_electronics
             services.AddControllersWithViews();
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<Buyers, IdentityRole>().AddEntityFrameworkStores<ShopContext>();
-
-            //    services.AddIdentityCore<IdentityUser>(
-            //options => options.SignIn.RequireConfirmedAccount = true)
-            //.AddRoles<IdentityRole>()
-            //.AddEntityFrameworkStores<ShopContext>();
             services.AddMvc();
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options => 
         {
             options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
         });
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

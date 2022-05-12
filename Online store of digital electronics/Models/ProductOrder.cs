@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Online_store_of_digital_electronics.Models
 {
-    [Table("RelationshipProductOrder")]
+    [Table("ProductOrder")]
     public class ProductOrder
     {
         [Key]
@@ -15,7 +15,7 @@ namespace Online_store_of_digital_electronics.Models
         public int Id_product { get; set; }
         public int Id_order{ get; set; }
         public int NumberProductsTheOrder { get; set; }
-        public Products Products { get; set; }
-        public Orders Orders { get; set; }
+        public Products Product { get; set; }
+        public Orders Order { get; set; }
     }
 }
