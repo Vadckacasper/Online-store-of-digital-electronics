@@ -1,5 +1,4 @@
-﻿
-<header>
+﻿<header>
     <nav class="navbar navbar-expand-lg navbar-light border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Калинин</a>
@@ -14,9 +13,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-                            <button class="btn btn-outline-primary" type="submit">Найти</button>
+                        <form class="d-flex" data-ajax="true" data-ajax-method="post" data-ajax-update="#list" data-ajax-mode='replace' data-ajax-begin="" data-ajax-url="@Url.Action("Search","Home")">
+                            <button id="submitForm" type="submit" style="display:none"></button>
+                            <div class="search" id="page-search">
+                                <input class="form-control me-2" id="Search_input" onkeyup="subitform()" name="Search" list="brow" type="search"  autocomplete="off" placeholder="Поиск" aria-label="Поиск">                                
+                                <a class="btn btn-outline-primary" onclick="Search()" >Поиск</a>
+                                <div class="search-history">
+                                    <div class="search-history__list" id="list"></div>
+                                </div>
+                            </div>
+                        </form>
+                        <form method="get" asp-controller="Products" asp-action="Search_input" style="display:none">
+                            <input id="SearchSub" type="submit" />
+                            <input id="inputSerch" name="Search" type="text" />
                         </form>
                     </li>
                 </ul>
@@ -41,7 +50,7 @@
                             {
                                 <p>@User.Identity.Name</p>
                                 <li>
-                                    <form method="post" class="dropdown-item" asp-controller="Account" asp-action="Logout" >
+                                    <form method="post" class="dropdown-item" asp-controller="Account" asp-action="Logout">
                                         <input type="submit" value="Выход" />
                                     </form>
                                 </li>
@@ -67,3 +76,28 @@
         </div>
     </nav>
 </header>
+<link rel="stylesheet" href="~/css/Search.css" type="text/css" />
+<script>
+        const searchInput = document.getElementById('page-search');
+        document.addEventListener("keyup", function (e) {
+            if (e.target.closest("#page-search")) {
+                searchInput.classList.add('focus');
+            } else {
+                searchInput.classList.remove('focus');
+            }
+        })
+        document.addEventListener("click", function (e) {
+            if (e.target.closest("#page-search")) {
+                searchInput.classList.add('focus');
+            } else {
+                searchInput.classList.remove('focus');
+            }
+        })
+        function subitform() {
+            document.querySelector("#submitForm").click();
+        }
+        function Search() {
+            $('#inputSerch').val($('#Search_input').val());
+        document.querySelector("#SearchSub").click();
+        }
+</script>

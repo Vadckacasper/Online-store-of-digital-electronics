@@ -13,51 +13,62 @@ namespace Online_store_of_digital_electronics.Controlles
     public class ProductCategoriesController : Controller
     {
         private readonly ShopContext _context;
+        private static ICollection<Products> ListProduct;
+        private static string IDSorst;
 
         public ProductCategoriesController(ShopContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetSortProduct(int id_category, string SortID)
+
+        private static List<Products> SortProduct()
         {
-            ProductCategory productCategory;
-            if (SortID == "PriceOrderBy")
+            if (IDSorst == "PriceOrderBy")
             {
-                productCategory = _context.productCategories.Include(p => p.Products.OrderBy(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
+                ListProduct = ListProduct.OrderBy(p => p.Price).ToList();
             }
-            else if(SortID == "PriceOrderByDes")
+            else if (IDSorst == "PriceOrderByDes")
             {
-                productCategory = _context.productCategories.Include(p => p.Products.OrderByDescending(p => p.Price)).FirstOrDefault(c => c.Id_сategory == id_category);
-            }else 
-            {
-                productCategory = _context.productCategories.Include(p => p.Products.OrderByDescending(p => p.Name)).FirstOrDefault(c => c.Id_сategory == id_category);
+                ListProduct = ListProduct.OrderByDescending(p => p.Price).ToList();
             }
-            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", productCategory.Products);
+            else
+            {
+                ListProduct = ListProduct.OrderBy(p => p.Name).ToList();
+            }
+            return ListProduct.ToList();
         }
         [HttpGet]
-        public IActionResult GetFilterProduct(int id_category, int[] Id_manufacturers, decimal minPrice, decimal maxPrice)
+        public IActionResult GetSortProduct(string SortID)
         {
+            IDSorst = SortID;           
+            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", SortProduct());
+        }
+        [HttpGet]
+        public IActionResult GetFilterProduct(int id_category, int[] Id_manufacturers, decimal minPrice = 0, decimal maxPrice = decimal.MaxValue)
+        {
+            var productcategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).FirstOrDefault(c => c.Id_сategory == id_category);
             List<Products> Products = new List<Products>();
-            var productCategory = _context.productCategories.Include(p => p.Products).FirstOrDefault(c => c.Id_сategory == id_category);
-
-            foreach(var prod in productCategory.Products)
-            {
-                
+            foreach(var prod in productcategory.Products)
+            {            
                 for(int i = 0; i < Id_manufacturers.Length; i++)
                 {
-                    if(prod.Id_manufacturer == Id_manufacturers[i] && prod.Price >= minPrice && prod.Price <= maxPrice)
+                    if(prod.Id_manufacturer == Id_manufacturers[i])
                     {
-                        Products.Add(prod);
+                        if (prod.Price >= minPrice && prod.Price <= maxPrice)
+                        {
+                            Products.Add(prod);
+                        }
                     }
                 }
             }
-            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", Products);
+            ListProduct = Products.ToList();
+            return PartialView("~/Views/Products/_ProductCard_Right.cshtml", SortProduct());
         }
         // GET: ProductCategoriesTable
         public async Task<IActionResult> Index(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -68,7 +79,8 @@ namespace Online_store_of_digital_electronics.Controlles
             {
                 return NotFound();
             }
-            productCategory = _context.productCategories.Include(p => p.Products).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
+            productCategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
+            ListProduct = productCategory.Products;
             return View(productCategory);
         }
 

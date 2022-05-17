@@ -25,5 +25,13 @@ namespace Online_store_of_digital_electronics.Controlles
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Search(string Search)
+        {
+            var Category = _context.productCategories.Where(c => c.Name.StartsWith(Search) == true);
+            var Product = _context.products.Where(p => p.Name.StartsWith(Search) == true);
+            HomeViewModel homeViewModel = new HomeViewModel(Product.ToList(), Category.ToList());
+           return PartialView("~/Views/Shared/_SearchList.cshtml", homeViewModel);
+        }
     }
 }

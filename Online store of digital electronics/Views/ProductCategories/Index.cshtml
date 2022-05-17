@@ -19,18 +19,19 @@
                     </button>
                     <input type="hidden" name="id_category" value="@Model.Id_сategory">
                     <div class="item-filters">
-                        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                           
                             <p class="list-group-item list-group-item-action filters-title">
-                                Производители
+                                <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Производители</a>
+                                <input id="checkbox" class="form-check-input float-end" onchange="CheckboxOn()" type="checkbox" checked />
                             </p>
-                        </a>
+
                         <div class="collapse" id="collapseExample">
-                            <div class="collapse-filters">
+                            <div id="controls" class="collapse-filters">
                                 @foreach (Manufacturers manufacturers in Model.Manufacturers)
                                 {
                                     <li class="list-group-item list-group-item-action filters-ditails">
-                                        <input class="form-check-input" type="checkbox" name="Id_manufacturers" value="@manufacturers.Id_manufacturer" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">@manufacturers.Name</label>
+                                        <input class="form-check-input" type="checkbox" name="Id_manufacturers" value="@manufacturers.Id_manufacturer" id="@manufacturers.Name" checked>
+                                        <label class="form-check-label" for="@manufacturers.Name">@manufacturers.Name</label>
                                     </li>
                                 }
                             </div>
@@ -64,27 +65,27 @@
                 <div class="top-filters-item">
                     <div class="top-filters-name">
                         <span>Сортировка по:</span>
-                        <form id="form" method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetSortProduct","ProductCategories")">
-                            <button id="submit" type="submit" style="display:none">
+                        <form id="formFilters" data-ajax="true" data-ajax-method="get" data-ajax-update="#Filters" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetSortProduct","ProductCategories")">
+                            <button id="subitSort" type="submit" style="display:none">
                             </button>
                             <input type="hidden" name="id_category" value="@Model.Id_сategory">
-                            <a class="nav-link active dropdown-toggle" id="simple" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
+                            <a class="nav-link active dropdown-toggle" id="simplefilters" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
                             <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="PriceOrderBy" id="flexRadioDefault1">
-                                    <label id="PriceOrderBy" class="form-check-label" for="flexRadioDefault1">
+                                    <input class="form-check-input"  onchange="subitSort()" type="radio" name="SortID" value="PriceOrderBy" id="flexRadioDefault1">
+                                    <label id="PriceOrderBy"  onclick="subitSort()" class="form-check-label" for="flexRadioDefault1">
                                         Сначала недорогие
                                     </label>
                                 </li>
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="PriceOrderByDes" id="flexRadioDefault2">
-                                    <label id="PriceOrderByDes" class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input"  onchange="subitSort()" type="radio" name="SortID" value="PriceOrderByDes" id="flexRadioDefault2">
+                                    <label id="PriceOrderByDes"  onclick="subitSort()" class="form-check-label" for="flexRadioDefault2">
                                         Сначала дорогие
                                     </label>
                                 </li>
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="sub()" type="radio" name="SortID" value="NameOrderBy" id="flexRadioDefault3">
-                                    <label id="NameOrderBy" class="form-check-label" for="flexRadioDefault3">
+                                    <input class="form-check-input" onchange="subitSort()" type="radio" name="SortID" value="NameOrderBy" id="flexRadioDefault3">
+                                    <label id="NameOrderBy"  class="form-check-label" for="flexRadioDefault3">
                                         Наименованию
                                     </label>
                                 </li>
@@ -93,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <div id="panel">
+            <div id="Filters">
                 @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.Products)
             </div>
         </div>
@@ -102,16 +103,26 @@
 </section>
 
 <script>
-    function sub() {
-        document.querySelector("#submit").click();
+    function subitSort() {
+        document.querySelector("#subitSort").click();
     }
 
     function UpdatingSorting() {
         var id = document.querySelector('input[name="SortID"]:checked').value;
-        document.getElementById("simple").innerHTML = document.getElementById(id).innerHTML;
+        document.getElementById("simplefilters").innerHTML = document.getElementById(id).innerHTML;
     }
     function min() {
         var id = document.getElementById("minPriceInput").value;
         document.getElementById("maxPriceInput").min = id;
+    }
+
+    function CheckboxOn(){
+        $('#checkbox').click(function () {
+            if ($(this).is(':checked')) {
+                $('#controls input:checkbox').prop('checked', true);
+            } else {
+                $('#controls input:checkbox').prop('checked', false);
+            }
+        });
     }
 </script>

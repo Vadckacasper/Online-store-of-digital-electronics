@@ -26,6 +26,22 @@ namespace Online_store_of_digital_electronics.Controlles
             return View(await Products.ToListAsync());
         }
 
+        [HttpGet]
+        public IActionResult Search_input(string Search)
+        {
+            Products Product = _context.products.FirstOrDefault(c => c.Name.StartsWith(Search) == true);
+            if (Product != null)
+            {
+                return RedirectToAction("Details", "Products", new { id = Product.Id_product });
+            }
+            ProductCategory productsController = _context.productCategories.FirstOrDefault(c => c.Name.StartsWith(Search) == true);
+            {if(productsController!=null)
+                
+                return RedirectToAction("Index", "ProductCategories", new { id = productsController.Id_сategory });
+            }
+            return NotFound();
+        }
+
         // GET: ProductsTable/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -1,10 +1,19 @@
 ﻿@model ProductOrder
-<button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-    <i class="fas fa-minus"></i>
-</button>
 
-<input id="form1" min="0" name="quantity" value="@Model.NumberProductsTheOrder" type="number" class="form-control form-control-sm" />
+<form class="d-flex" data-ajax="true" data-ajax-method="post" data-ajax-update="#Making" data-ajax-mode='replace' data-ajax-url="@Url.Action("ChangingQuantity","Orders")">
+    <button id="submitCount" type="submit" style="display:none"></button>
+    <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+        <i class="fas fa-minus"></i>
+    </button>
+    <input type="hidden" name="id" value="@Model.Id_product" />
+    <input min="0" type="number" name="Number" value="@Model.NumberProductsTheOrder" onchange="subm()" class="form-control form-control-sm" style="width: 50px; text-align:center" />
+    <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+        <i class="fas fa-plus"></i>
+    </button>
+</form>
 
-<button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-    <i class="fas fa-plus"></i>
-</button>
+<script>
+    function subm() {
+        document.querySelector("#submitCount").click();
+    }
+</script>

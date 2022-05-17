@@ -3,19 +3,22 @@
 <div class="product-list__block">
     @foreach (Products product in Model)
     {
+        decimal priceSale = (product.Price / 100) * (100 - product.Sale);
         <div class="product-card__block">
-            <div class="card-img"><img src="@product.Image" class="img-fluid rounded-start" alt="..."><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product"></a></div>
+            <div class="card-img"><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product"><img src="@product.Image" class="img-fluid rounded-start" alt="..."></a></div>
             <div class="card-ditails">
                 <div class="card-name">
-                    <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.Name</a></h4>
+                    <h4 class="text-wrap"><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.manufacturer.Name @product.Name</a></h4>
                 </div>
                 <div class="card-description">
-                    <p class="text-wrap" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.Description</p>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">
+                        <p class="text-wrap text-truncate" style="max-height: 100px;" >@product.Description</p>
+                    </a>
                 </div>
             </div>
             <div class="card-button ">
                 <div class="card-price float-start">
-                    <div class="product-price"> @product.Price₽ <small>17999₽</small></div>
+                    <div class="product-price"> @priceSale <small>@product.Price₽</small></div>
                 </div>
                 <div class="card-button-buy float-start">
                     @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)

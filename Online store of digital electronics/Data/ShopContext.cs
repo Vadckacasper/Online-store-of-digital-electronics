@@ -27,7 +27,6 @@ namespace Online_store_of_digital_electronics.Data
             modelBuilder.Entity<Manufacturers>().ToTable("Manufacturers");
             modelBuilder.Entity<Orders>().ToTable("Orders");
             modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
-            //modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
             modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
             base.OnModelCreating(modelBuilder);
         }

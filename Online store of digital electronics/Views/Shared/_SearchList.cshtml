@@ -1,0 +1,11 @@
+﻿@model Online_store_of_digital_electronics.ViewModel.HomeViewModel
+
+@foreach (var category in Model.ProductCategories.Take(2))
+{
+    <a class="list-group-item list-group-item-action" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@category.Id_сategory">@category.Name</a>
+}
+
+@foreach (var product in Model.Products.Take(3))
+{
+    <a class="list-group-item list-group-item-action" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">@product.Name</a>
+}

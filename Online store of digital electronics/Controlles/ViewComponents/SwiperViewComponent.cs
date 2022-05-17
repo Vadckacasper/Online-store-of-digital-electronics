@@ -26,7 +26,7 @@ namespace Online_store_of_digital_electronics.ViewComponents
         {
             string BuyersID = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Orders Cart = _context.orders.Include(o => o.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
-            var ProductCategory = _context.productCategories.Include(p => p.Products.Take(20)).FirstOrDefault(c => c.Name == nameCategory);
+            var ProductCategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).FirstOrDefault(c => c.Name == nameCategory);
             return View(ProductCategory);
         }
     }

@@ -31,10 +31,35 @@ namespace Online_store_of_digital_electronics.Controlles
         public IActionResult ShoppingСart()
         {
             string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Orders Cart = _context.orders.Include(o => o.ProductOrder).ThenInclude(p => p.Product).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            Orders Cart = _context.orders.Include(o => o.ProductOrder).ThenInclude(p => p.Product).ThenInclude(p => p.manufacturer).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
             return View(Cart.ProductOrder);
         }
+        [HttpPost]
+        public ActionResult ChangingQuantity(int id, int Number)
+        {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.Include(p => p.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
 
+            if (Number == 0)
+            {
+                if (_context.productOrders.FirstOrDefault(po => po.Id_product == id && po.Id_order == Cart.Id_order) != null)
+                    _context.productOrders.Remove(_context.productOrders.First(po => po.Id_product == id && po.Id_order == Cart.Id_order));
+            }
+            else
+            {
+                _context.productOrders.First(po => po.Id_product == id && po.Id_order == Cart.Id_order).NumberProductsTheOrder = Number;
+            }
+            _context.SaveChanges();
+
+            var productOrders = _context.productOrders.Include(p => p.Product).Where(po => po.Id_order == Cart.Id_order);
+            MakingOrderViewModel making = new MakingOrderViewModel();
+            foreach (var prod in productOrders)
+            {
+                making.SumPriceProduct += ((prod.Product.Price / 100) * (100 - prod.Product.Sale)) * prod.NumberProductsTheOrder;
+                making.NumberProducts += prod.NumberProductsTheOrder;
+            }
+            return PartialView("~/Views/Orders/_MakingOrder.cshtml", making);
+        }
         [HttpPost]
         public ActionResult AddToBasket(int id)
         {
@@ -45,19 +70,20 @@ namespace Online_store_of_digital_electronics.Controlles
                 Buyers buyers = _context.buyers.FirstOrDefault(b => b.Id == BuyersID);
                 Cart = new Orders() { Status = "Оформление", Buyers = buyers };
                 _context.orders.Add(Cart);
-            }   
-            
+            }
+
             ProductOrder productOrder = _context.productOrders.FirstOrDefault(po => po.Id_product == id && po.Id_order == Cart.Id_order);
             if (productOrder != null)
             {
                 productOrder.NumberProductsTheOrder++;
-            }else
+            }
+            else
             {
-                productOrder = new ProductOrder() { Id_order = Cart.Id_order, Id_product =id, NumberProductsTheOrder = 1, Product = _context.products.FirstOrDefault(p => p.Id_product == id), Order = Cart };
+                productOrder = new ProductOrder() { Id_order = Cart.Id_order, Id_product = id, NumberProductsTheOrder = 1, Product = _context.products.FirstOrDefault(p => p.Id_product == id), Order = Cart };
                 Cart.ProductOrder.Add(productOrder);
             }
-           _context.SaveChanges();
-            
+            _context.SaveChanges();
+
             return PartialView("~/Views/Shared/_ProductСounter.cshtml", productOrder);
         }
 
@@ -69,12 +95,12 @@ namespace Online_store_of_digital_electronics.Controlles
             Orders Cart = _context.orders.Include(p => p.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
 
             var productOrders = _context.productOrders.Include(p => p.Product).Where(po => po.Id_order == Cart.Id_order);
-            _context.productOrders.Remove(productOrders.FirstOrDefault(po=> po.Id_product == id));
+            _context.productOrders.Remove(productOrders.FirstOrDefault(po => po.Id_product == id));
             _context.SaveChanges();
             MakingOrderViewModel making = new MakingOrderViewModel();
             foreach (var prod in productOrders)
             {
-                making.SumPriceProduct += prod.Product.Price * prod.NumberProductsTheOrder;
+                making.SumPriceProduct += ((prod.Product.Price / 100) * (100 - prod.Product.Sale)) * prod.NumberProductsTheOrder;
                 making.NumberProducts += prod.NumberProductsTheOrder;
             }
             return PartialView("~/Views/Orders/_MakingOrder.cshtml", making);
