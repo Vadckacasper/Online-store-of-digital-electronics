@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Online_store_of_digital_electronics.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,15 +34,23 @@ namespace Online_store_of_digital_electronics.Models
             Products = new List<Products>();
             Manufacturers = new List<Manufacturers>();
         }
-        public List<ProductCategory> GetCatalog(List<ProductCategory> AllCategories)
+        public List<ProductCategory> GetCatalog(ShopContext _context)
         {
             List<ProductCategory> productCategories = new List<ProductCategory>();
+            List<ProductCategory> category = new List<ProductCategory>();
 
-            var parents = AllCategories.Where(c => c.Id_parent == null);
+            var parents = _context.productCategories.Where(c => c.Id_parent == null);
             foreach (var parent in parents)
             {
-                parent.Children = AllCategories.Where(p => p.Id_parent == parent.Id_сategory).ToList();
+                category = _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToList();
+                parent.Children.Clear();
+                foreach (var child in category)
+                {
+
+                    parent.Children.Add(child);
+                }
                 productCategories.Add(parent);
+
             }
             return productCategories;
         }

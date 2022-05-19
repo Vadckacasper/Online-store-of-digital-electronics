@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProductCategory>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="container-fluid">
+        @foreach (var parent in Model)
+        {
+            
+            <h4>@parent.Name</h4>
+        <div class="row">
+            @foreach (var child in parent.Children)
+            {
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <a asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
+                        <div class="img-card">
+                            <figure>
+                                <img src="@child.Image" alt="">
+                                <figcaption>@child.Name</figcaption>
+                            </figure>
+                        </div>
+                    </a>
+                </div>
+            }
+
+        </div>
+        }
+    </div>
+</section>

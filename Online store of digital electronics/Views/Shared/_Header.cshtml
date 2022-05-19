@@ -96,8 +96,11 @@
         function subitform() {
             document.querySelector("#submitForm").click();
         }
-        function Search() {
+    function Search() {
+        var value = $('#Search_input').val();
+        if (value != "") {
             $('#inputSerch').val($('#Search_input').val());
-        document.querySelector("#SearchSub").click();
+            document.querySelector("#SearchSub").click();
+        }
         }
 </script>

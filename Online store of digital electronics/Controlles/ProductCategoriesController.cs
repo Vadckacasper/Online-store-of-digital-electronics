@@ -68,20 +68,61 @@ namespace Online_store_of_digital_electronics.Controlles
         // GET: ProductCategoriesTable
         public async Task<IActionResult> Index(int? id)
         {
+            List<ProductCategory> category = _context.productCategories.Where(c => c.Id_parent == id).ToList();
+            if (category.Count == 0)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var productCategory = await _context.productCategories.FirstOrDefaultAsync(m => m.Id_сategory == id);
 
+                if (productCategory == null)
+                {
+                    return NotFound();
+                }
+                productCategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
+                ListProduct = productCategory.Products;
+                return View(productCategory);
+            }else
+                return RedirectToAction("Category", "ProductCategories", new { id = id });
+        }
+        
+        [HttpGet]
+        public IActionResult Category(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
             }
-            var productCategory = await _context.productCategories.FirstOrDefaultAsync(m => m.Id_сategory == id);
+            List<ProductCategory> productCategory =  _context.productCategories.Include(c => c.Children).Where(m => m.Id_сategory == id).ToList();
 
             if (productCategory == null)
             {
                 return NotFound();
             }
-            productCategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
-            ListProduct = productCategory.Products;
-            return View(productCategory);
+            List<ProductCategory> categorys = new List<ProductCategory>();
+            List<ProductCategory> category = new List<ProductCategory>();
+            foreach (var parent in productCategory)
+            {
+                parent.Children.Clear();
+                if (parent.Id_parent == null)
+                {
+                    category = _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToList();
+                    foreach (var child in category)
+                    {
+                        child.Children = _context.productCategories.Where(c => c.Id_parent == child.Id_сategory).ToList();
+                        categorys.Add(child);
+                    }
+                   
+                }
+                else
+                {
+                    parent.Children = _context.productCategories.Where(c => c.Id_parent == parent.Id_сategory).ToList();
+                    categorys.Add(parent);
+                }
+            }
+            return View(categorys);
         }
 
         [HttpGet]

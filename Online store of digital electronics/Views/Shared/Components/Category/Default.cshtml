@@ -14,23 +14,30 @@
                 </div>
             </div>
             <div class="col-9 subcatalog" id="subcatalog">
-                @foreach (ProductCategory parent in Model)
+                @foreach (ProductCategory item in Model)
                 {
-                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@parent.Id_сategory.ToString()">
-                        <div class="col-3 m-3">
-                            <div class="subcatalog-item">
-                                <div class="subcatalog-header">@parent.Name</div>
-                                @foreach (ProductCategory child in parent.Children)
-                                {
-                                    <li><a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
-                                        @child.Name
-                                    </a></li>
-                                }
 
+                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@item.Id_сategory.ToString()">
+                        @foreach (ProductCategory parent in item.Children)
+                        {
+                            <div class="col-3 m-3">
+                                <div class="subcatalog-item">
+                                    <div class="subcatalog-header"><a asp-controller="ProductCategories" asp-action="Category" asp-route-id="@parent.Id_сategory">@parent.Name</a></div>
+                                    @foreach (ProductCategory child in parent.Children)
+                                    {
+                                        <li>
+                                            <a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
+                                                @child.Name
+                                            </a>
+                                        </li>
+                                    }
+
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                } 
+
+                }
             </div>
         </div>
     </div>

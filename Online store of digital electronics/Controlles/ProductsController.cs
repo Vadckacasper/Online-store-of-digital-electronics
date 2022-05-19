@@ -39,7 +39,7 @@ namespace Online_store_of_digital_electronics.Controlles
                 
                 return RedirectToAction("Index", "ProductCategories", new { id = productsController.Id_сategory });
             }
-            return NotFound();
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: ProductsTable/Details/5

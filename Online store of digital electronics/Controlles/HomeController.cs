@@ -20,8 +20,23 @@ namespace Online_store_of_digital_electronics.Controlles
         }
         public IActionResult Index()
         {
-            ProductCategory productCategory = new ProductCategory();
-            HomeViewModel model = new HomeViewModel(_context.products.ToList(), productCategory.GetCatalog(_context.productCategories.ToList()));
+            List<ProductCategory> productCategories = new List<ProductCategory>();
+            List<ProductCategory> category = new List<ProductCategory>();
+
+            var parents = _context.productCategories.Where(c => c.Id_parent == null);
+            foreach (var parent in parents)
+            {
+                category = _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToList();
+                parent.Children.Clear();
+                foreach (var child in category)
+                {
+                    child.Children = _context.productCategories.Where(c => c.Id_parent == child.Id_сategory).ToList();
+                    parent.Children.Add(child);
+                }
+                productCategories.Add(parent);
+
+            }
+            HomeViewModel model = new HomeViewModel(_context.products.ToList(), productCategories.ToList());
             return View(model);
         }
 

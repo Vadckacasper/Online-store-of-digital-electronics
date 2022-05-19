@@ -13,8 +13,8 @@
 
         <div class="products-page__left-block">
             <div class="product-list-filters__block">
-                <form method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#panel" data-ajax-mode='replace' data-ajax-url="@Url.Action("GetFilterProduct","ProductCategories")">
-                    <button id="Filterssubmit" type="submit" class="btn btn-outline-primary">
+                <form method="get" data-ajax="true" data-ajax-method="get" data-ajax-update="#Filters" data-ajax-mode='replace' data-ajax-url="@Url.Action("GetFilterProduct","ProductCategories")">
+                    <button id="Filterssubmit" class="btn btn-outline-primary">
                         Показать
                     </button>
                     <input type="hidden" name="id_category" value="@Model.Id_сategory">
@@ -47,7 +47,7 @@
                             <div class="card-filters">
                                 <li class="list-group-item list-group-item-action filters-ditails">
                                     <div class="input-group mb-3">
-                                        <input min="0" class="form-control" onchange="min()" type="number" name="minPrice" id="minPriceInput" placeholder="От" />
+                                        <input min="0" class="form-control" type="number" name="minPrice" id="minPriceInput" placeholder="От" />
                                         <span class="input-group-text">-</span>
                                         <input min="0" class="form-control" type="number" name="maxPrice" id="maxPriceInput" placeholder="До" />
                                     </div>                             
@@ -72,20 +72,20 @@
                             <a class="nav-link active dropdown-toggle" id="simplefilters" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
                             <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
                                 <li class="dropdown-item">
-                                    <input class="form-check-input"  onchange="subitSort()" type="radio" name="SortID" value="PriceOrderBy" id="flexRadioDefault1">
-                                    <label id="PriceOrderBy"  onclick="subitSort()" class="form-check-label" for="flexRadioDefault1">
+                                    <input class="form-check-input js__input" data-target="#subitSort" type="radio" name="SortID" value="PriceOrderBy" id="flexRadioDefault1">
+                                    <label id="PriceOrderBy" class="form-check-label" for="flexRadioDefault1">
                                         Сначала недорогие
                                     </label>
                                 </li>
                                 <li class="dropdown-item">
-                                    <input class="form-check-input"  onchange="subitSort()" type="radio" name="SortID" value="PriceOrderByDes" id="flexRadioDefault2">
-                                    <label id="PriceOrderByDes"  onclick="subitSort()" class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input js__input" data-target="#subitSort" type="radio" name="SortID" value="PriceOrderByDes" id="flexRadioDefault2">
+                                    <label id="PriceOrderByDes" class="form-check-label" for="flexRadioDefault2">
                                         Сначала дорогие
                                     </label>
                                 </li>
                                 <li class="dropdown-item">
-                                    <input class="form-check-input" onchange="subitSort()" type="radio" name="SortID" value="NameOrderBy" id="flexRadioDefault3">
-                                    <label id="NameOrderBy"  class="form-check-label" for="flexRadioDefault3">
+                                    <input class="form-check-input js__input" data-target="#subitSort" type="radio" name="SortID" value="NameOrderBy" id="flexRadioDefault3">
+                                    <label id="NameOrderBy" class="form-check-label" for="flexRadioDefault3">
                                         Наименованию
                                     </label>
                                 </li>
@@ -103,26 +103,28 @@
 </section>
 
 <script>
-    function subitSort() {
-        document.querySelector("#subitSort").click();
-    }
-
-    function UpdatingSorting() {
-        var id = document.querySelector('input[name="SortID"]:checked').value;
-        document.getElementById("simplefilters").innerHTML = document.getElementById(id).innerHTML;
-    }
-    function min() {
-        var id = document.getElementById("minPriceInput").value;
-        document.getElementById("maxPriceInput").min = id;
-    }
-
-    function CheckboxOn(){
-        $('#checkbox').click(function () {
-            if ($(this).is(':checked')) {
-                $('#controls input:checkbox').prop('checked', true);
-            } else {
-                $('#controls input:checkbox').prop('checked', false);
+    function checkInput() {
+        document.addEventListener("change", function (e) {
+            if (e.target.classList.contains("js__input")) {
+                document.querySelector(e.target.dataset.target).click();
             }
-        });
+        })
     }
+    checkInput();
+
+        function UpdatingSorting() {
+            var id = document.querySelector('input[name="SortID"]:checked').value;
+            document.getElementById("simplefilters").innerHTML = document.getElementById(id).innerHTML;
+        }
+
+        function CheckboxOn() {
+            $('#checkbox').click(function () {
+                if ($(this).is(':checked')) {
+                    $('#controls input:checkbox').prop('checked', true);
+                } else {
+                    $('#controls input:checkbox').prop('checked', false);
+                }
+            });
+        }
+    
 </script>

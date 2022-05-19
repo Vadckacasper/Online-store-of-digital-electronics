@@ -21,12 +21,20 @@ namespace Online_store_of_digital_electronics.Controlles.Component
         public async Task<IViewComponentResult> InvokeAsync(int? parentId = null)
         {
             List<ProductCategory> productCategories = new List<ProductCategory>();
+            List<ProductCategory> category = new List<ProductCategory>();
 
-            var parents = _context.productCategories.Where(c => c.Id_parent == parentId);
+            var parents = _context.productCategories.Where(c => c.Id_parent == null);
             foreach (var parent in parents)
             {
-                parent.Children = await _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToListAsync();
+                category = await _context.productCategories.Where(p => p.Id_parent == parent.Id_сategory).ToListAsync();
+                parent.Children.Clear();
+                foreach (var child in category)
+                {
+                    child.Children = _context.productCategories.Where(c => c.Id_parent == child.Id_сategory).ToList();
+                    parent.Children.Add(child);
+                }
                 productCategories.Add(parent);
+
             }
             return View(productCategories);
         }
