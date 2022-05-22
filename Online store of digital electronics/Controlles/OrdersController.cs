@@ -71,6 +71,7 @@ namespace Online_store_of_digital_electronics.Controlles
                 Cart = new Orders() { Status = "Оформление", Buyers = buyers };
                 _context.orders.Add(Cart);
             }
+            _context.SaveChanges();
 
             ProductOrder productOrder = _context.productOrders.FirstOrDefault(po => po.Id_product == id && po.Id_order == Cart.Id_order);
             if (productOrder != null)

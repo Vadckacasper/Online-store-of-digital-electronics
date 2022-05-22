@@ -26,13 +26,15 @@ namespace Online_store_of_digital_electronics.Models
         public virtual ICollection<ProductCategory> Children { get; set; }
 
         // Продукты в категории.
-        public ICollection<Products> Products { get; set; }
+        public List<Products> Products { get; set; }
         public ICollection<Manufacturers> Manufacturers { get; set; }
+        public ICollection<Specifications> Specifications { get; set; }
         public ProductCategory()
         {
             Children = new List<ProductCategory>();
             Products = new List<Products>();
             Manufacturers = new List<Manufacturers>();
+            Specifications = new List<Specifications>();
         }
         public List<ProductCategory> GetCatalog(ShopContext _context)
         {

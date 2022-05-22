@@ -16,10 +16,5 @@ namespace Online_store_of_digital_electronics.ViewModel
             products = _products;
 
         }
-
-        public void GetSpecifications(Products _products)
-        {
-            string Specifications = _products.Specifications;
-        }
     }
 }

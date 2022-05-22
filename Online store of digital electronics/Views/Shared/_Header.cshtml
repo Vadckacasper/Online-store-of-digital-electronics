@@ -48,6 +48,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             @if (User.Identity.IsAuthenticated)
                             {
+                                
                                 <p>@User.Identity.Name</p>
                                 <li>
                                     <form method="post" class="dropdown-item" asp-controller="Account" asp-action="Logout">

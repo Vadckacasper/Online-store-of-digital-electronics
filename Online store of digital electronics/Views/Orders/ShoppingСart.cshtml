@@ -35,7 +35,7 @@
                                         <p class="lead fw-normal mb-2">@product.Product.manufacturer.Name @product.Product.Name</p>
                                     </a>
                                     <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id_product">
-                                        <p style="max-height: 200px">@product.Product.Description</p>
+                                        <p class="text-wrap text-truncate" style="max-height: 195px">@product.Product.Description</p>
                                     </a>
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">

@@ -21,7 +21,21 @@
                     <div class="product-price"> @priceSale <small>@product.Price₽</small></div>
                 </div>
                 <div class="card-button-buy float-start">
-                    @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)
+                    @{
+                        if (product.ProductOrder.Count == 0)
+                        {
+
+                            @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", product)
+                        }
+                        else
+                        {
+                            foreach (ProductOrder productOrder in product.ProductOrder)
+                            {
+                              
+                                @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml", product.ProductOrder.First())
+                            }
+                        }
+                    }
                 </div>
 
             </div>

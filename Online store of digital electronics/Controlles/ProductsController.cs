@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -45,13 +46,18 @@ namespace Online_store_of_digital_electronics.Controlles
         // GET: ProductsTable/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.Include(o => o.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var products = await _context.products.Include(m => m.manufacturer)
+            var products = await _context.products.Include(m => m.manufacturer).Include(s => s.Specifications)
                 .FirstOrDefaultAsync(m => m.Id_product == id);
+            products.ProductOrder.Clear();
+            products.ProductOrder.Add(Cart.ProductOrder.FirstOrDefault(po => po.Id_product == id));
             if (products == null)
             {
                 return NotFound();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,6 +48,8 @@ namespace Online_store_of_digital_electronics.Controlles
         [HttpGet]
         public IActionResult GetFilterProduct(int id_category, int[] Id_manufacturers, decimal minPrice = 0, decimal maxPrice = decimal.MaxValue)
         {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.Include(po => po.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
             var productcategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).FirstOrDefault(c => c.Id_сategory == id_category);
             List<Products> Products = new List<Products>();
             foreach(var prod in productcategory.Products)
@@ -62,12 +65,29 @@ namespace Online_store_of_digital_electronics.Controlles
                     }
                 }
             }
+
+            foreach (var order in Cart.ProductOrder)
+            {
+                for (int i = 0; i < Products.Count; i++)
+                {
+                    if (Products[i].Id_product == order.Id_product)
+                    {
+                        Products[i].ProductOrder.Clear();
+                        Products[i].ProductOrder.Add(order);
+                    }
+                }
+            }
+
+
             ListProduct = Products.ToList();
             return PartialView("~/Views/Products/_ProductCard_Right.cshtml", SortProduct());
         }
         // GET: ProductCategoriesTable
         public async Task<IActionResult> Index(int? id)
         {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders Cart = _context.orders.Include(po => po.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+
             List<ProductCategory> category = _context.productCategories.Where(c => c.Id_parent == id).ToList();
             if (category.Count == 0)
             {
@@ -75,15 +95,30 @@ namespace Online_store_of_digital_electronics.Controlles
                 {
                     return NotFound();
                 }
-                var productCategory = await _context.productCategories.FirstOrDefaultAsync(m => m.Id_сategory == id);
+                ProductCategory productCategory = await _context.productCategories.FirstOrDefaultAsync(m => m.Id_сategory == id);
 
                 if (productCategory == null)
                 {
                     return NotFound();
                 }
                 productCategory = _context.productCategories.Include(p => p.Products).ThenInclude(p => p.manufacturer).Include(p => p.Manufacturers).FirstOrDefault(c => c.Id_сategory == id);
+                foreach(var order in Cart.ProductOrder)
+                {
+                    for(int i = 0; i < productCategory.Products.Count; i++)
+                    {
+                        if(productCategory.Products[i].Id_product == order.Id_product)
+                        {
+                            productCategory.Products[i].ProductOrder.Clear();
+                            productCategory.Products[i].ProductOrder.Add(order);
+
+                        }
+                    }
+
+                }
+
+                CategoryViewModel categoryViewModel = new CategoryViewModel(productCategory);
                 ListProduct = productCategory.Products;
-                return View(productCategory);
+                return View(categoryViewModel);
             }else
                 return RedirectToAction("Category", "ProductCategories", new { id = id });
         }

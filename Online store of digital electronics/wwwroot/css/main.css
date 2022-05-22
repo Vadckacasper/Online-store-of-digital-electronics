@@ -352,13 +352,14 @@ a.nav-link.active.dropdown-toggle.header::after {
     color: red;
 }
 
-.img-card figure {
-    width: 80%;
-    height: 80%;
-    text-align: center;
-    padding-top: 10px;
-    font-weight: 500;
-}
+    .img-card figure {
+        width: 80%;
+        height: 80%;
+        text-align: center;
+        padding-top: 10px;
+        font-weight: 500;
+        line-height: 1.2em;
+    }
 
 .img-card img {
     width: 100%;

@@ -20,8 +20,10 @@ namespace Online_store_of_digital_electronics.Data
         public DbSet<Orders> orders { get; set; }
         public DbSet<ProductCategory> productCategories { get; set; }
         public DbSet<ProductOrder> productOrders { get; set; }
+        public DbSet<Specifications> specifications{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Specifications>().ToTable("Specifications");
             modelBuilder.Entity<Products>().ToTable("Products");
             modelBuilder.Entity<Buyers>().ToTable("Buyers");
             modelBuilder.Entity<Manufacturers>().ToTable("Manufacturers");

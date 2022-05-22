@@ -1,13 +1,14 @@
-﻿@model Online_store_of_digital_electronics.Models.ProductCategory
+﻿@model CategoryViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
+
 <link rel="stylesheet" href="~/css/Product.css" type="text/css" />
 <section>
     <div class="page-title">
-        <h3>@Model.Name</h3>
+        <h3>@Model.ProductCategory.Name</h3>
     </div>
     <div class="products-page__content">
 
@@ -17,17 +18,17 @@
                     <button id="Filterssubmit" class="btn btn-outline-primary">
                         Показать
                     </button>
-                    <input type="hidden" name="id_category" value="@Model.Id_сategory">
+                    <input type="hidden" name="id_category" value="@Model.ProductCategory.Id_сategory">
                     <div class="item-filters">
-                           
-                            <p class="list-group-item list-group-item-action filters-title">
-                                <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Производители</a>
-                                <input id="checkbox" class="form-check-input float-end" onchange="CheckboxOn()" type="checkbox" checked />
-                            </p>
+
+                        <p class="list-group-item list-group-item-action filters-title">
+                            <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Производители</a>
+                            <input id="checkbox" class="form-check-input float-end" onchange="CheckboxOn()" type="checkbox" checked />
+                        </p>
 
                         <div class="collapse" id="collapseExample">
                             <div id="controls" class="collapse-filters">
-                                @foreach (Manufacturers manufacturers in Model.Manufacturers)
+                                @foreach (Manufacturers manufacturers in Model.ProductCategory.Manufacturers)
                                 {
                                     <li class="list-group-item list-group-item-action filters-ditails">
                                         <input class="form-check-input" type="checkbox" name="Id_manufacturers" value="@manufacturers.Id_manufacturer" id="@manufacturers.Name" checked>
@@ -47,10 +48,15 @@
                             <div class="card-filters">
                                 <li class="list-group-item list-group-item-action filters-ditails">
                                     <div class="input-group mb-3">
-                                        <input min="0" class="form-control" type="number" name="minPrice" id="minPriceInput" placeholder="От" />
+                                        <input min="@Model.minPrice" max="@Model.maxPrice" class="form-control" type="number" name="minPrice" id="minPriceInput" placeholder="От @Model.minPrice" />
                                         <span class="input-group-text">-</span>
-                                        <input min="0" class="form-control" type="number" name="maxPrice" id="maxPriceInput" placeholder="До" />
-                                    </div>                             
+                                        <input min="@Model.minPrice"  max="@Model.maxPrice" class="form-control" type="number" name="maxPrice" id="maxPriceInput" placeholder="До @Model.maxPrice" />
+                                    </div>
+                                    <div id="slider-range"></div>
+                                    <div>
+                                        <span id="rub-left" style="position: absolute;"></span>
+                                        <span id="rub-right" style="position: absolute; margin-left: 30%;"></span>
+                                    </div>
                                 </li>
                             </div>
                         </div>
@@ -68,7 +74,7 @@
                         <form id="formFilters" data-ajax="true" data-ajax-method="get" data-ajax-update="#Filters" data-ajax-mode='replace' data-ajax-begin="UpdatingSorting()" data-ajax-url="@Url.Action("GetSortProduct","ProductCategories")">
                             <button id="subitSort" type="submit" style="display:none">
                             </button>
-                            <input type="hidden" name="id_category" value="@Model.Id_сategory">
+                            <input type="hidden" name="id_category" value="@Model.ProductCategory.Id_сategory">
                             <a class="nav-link active dropdown-toggle" id="simplefilters" data-bs-toggle="dropdown" aria-current="page" href="#">Цене</a>
                             <ul class="dropdown-menu top-filters-menu" aria-labelledby="dropdownMenuButton1">
                                 <li class="dropdown-item">
@@ -95,7 +101,7 @@
                 </div>
             </div>
             <div id="Filters">
-                @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.Products)
+                @await Html.PartialAsync("~/Views/Products/_ProductCard_Right.cshtml", Model.ProductCategory.Products)
             </div>
         </div>
     </div>
@@ -112,19 +118,50 @@
     }
     checkInput();
 
-        function UpdatingSorting() {
-            var id = document.querySelector('input[name="SortID"]:checked').value;
-            document.getElementById("simplefilters").innerHTML = document.getElementById(id).innerHTML;
-        }
+    function UpdatingSorting() {
+        var id = document.querySelector('input[name="SortID"]:checked').value;
+        document.getElementById("simplefilters").innerHTML = document.getElementById(id).innerHTML;
+    }
 
-        function CheckboxOn() {
-            $('#checkbox').click(function () {
-                if ($(this).is(':checked')) {
-                    $('#controls input:checkbox').prop('checked', true);
-                } else {
-                    $('#controls input:checkbox').prop('checked', false);
-                }
-            });
+    function CheckboxOn() {
+        $('#checkbox').click(function () {
+            if ($(this).is(':checked')) {
+                $('#controls input:checkbox').prop('checked', true);
+            } else {
+                $('#controls input:checkbox').prop('checked', false);
+            }
+        });
+    }
+
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+
+<script>
+    $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [0, 300],
+        step: 10,
+        slide: function (event, ui) {
+            $("#minPriceInput").val(ui.values[0] + 'р.'); // текст левого span
+            $("#maxPriceInput").val(ui.values[1] + 'р.'); // текст правого span
+
+            if (ui.handleIndex === 0) {
+                // потянули левый ползунок - переместим левый span
+                $("#rub-left").css('margin-left', ui.handle.style.left);
+            } else {
+                // потянули правый ползунок - переместим правый span
+                $("#rub-right").css('margin-left', ui.handle.style.left);
+            }
         }
-    
+    });
+
+    // задать начальный текст левого span
+    $("#minPriceInput").val($("#slider-range").slider("values", 0) + 'р.');
+    // задать начальный текст правого span
+    $("#maxPriceInput").val($("#slider-range").slider("values", 1) + 'р.');
 </script>

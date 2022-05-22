@@ -20,16 +20,17 @@ namespace Online_store_of_digital_electronics.Models
         public decimal Price { get; set; }
         public byte Sale { get; set; }
         public bool Available { get; set; }
-        public string Specifications { get; set; }
         public double Rating { get; set; }
         public Manufacturers manufacturer { get; set; }
         //Категории, в которых есть данный продукт.
         public ICollection<ProductCategory> Categories { get; set; }
         public ICollection<ProductOrder> ProductOrder { get; set; }
+        public ICollection<Specifications> Specifications { get; set; }
         public Products()
         {
             Categories = new List<ProductCategory>();
             ProductOrder = new List<ProductOrder>();
+            Specifications = new List<Specifications>();
         }
     }
 }

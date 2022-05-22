@@ -17,22 +17,13 @@
                         <div class="specifications-min__block p-2">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <td>Экран</td>
-                                        <td>6.1"/2532x1170 Пикс</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Технология экрана</td>
-                                        <td>OLED</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Тип процессора</td>
-                                        <td>A14 Bionic</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Экран</td>
-                                        <td>6.1"/2532x1170 Пикс</td>
-                                    </tr>
+                                    @foreach (var specification in Model.Specifications.Take(4))
+                                    {
+                                        <tr style="font-size:14px;">
+                                            <td>@specification.Title</td>
+                                            <td>@specification.Content</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                             <a href="#specifications" class="link-detailed">Все характеристики</a>
@@ -45,10 +36,20 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3">
-                        <div class="button-basket__block d-flex justify-content-between align-items-center mt-5">
-                            <div class="product-price"> @Model.Price₽ <small>85999</small></div>
-                            <button asp-action="Index" class="btn btn-primary btn-rounded">Купить сейчас</button>
-                        </div>
+                        @{
+                            if (Model.ProductOrder.Count == 0)
+                            {
+
+                                @await Html.PartialAsync("~/Views/Shared/_AddCartButton.cshtml", Model)
+                            }
+                            else
+                            {
+                                foreach (ProductOrder productOrder in Model.ProductOrder)
+                                {
+                                    @await Html.PartialAsync("~/Views/Shared/_ProductСounter.cshtml", Model.ProductOrder.First())
+                                }
+                            }
+                        }
                         <div class="company-logo__block" style="width: 100%; margin: 5px; border-radius: 20px;">
                             <figure>
                                 <img src="@Model.manufacturer.Logo" alt="">
@@ -76,31 +77,23 @@
 
     </div>
 
-
+    @{ 
+        List<Specifications> ListSpec = Model.Specifications.ToList();
+    }
     <div class="product-details__container">
         <h3 class="box-title text-center" id="specifications">Характеристики</h3>
         <div class="card-body row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="table-responsive">
-                    @Model.Specifications
                     <table class="table">
                         <tbody>
-                            <tr>
-                                <td>Экран</td>
-                                <td>6.1"/2532x1170 Пикс</td>
-                            </tr>
-                            <tr>
-                                <td>Технология экрана</td>
-                                <td>OLED</td>
-                            </tr>
-                            <tr>
-                                <td>Тип процессора</td>
-                                <td>A14 Bionic</td>
-                            </tr>
-                            <tr>
-                                <td>Экран</td>
-                                <td>6.1"/2532x1170 Пикс</td>
-                            </tr>
+                            @for(int i = 0; i < ListSpec.Count/2; i++)
+                            {
+                                <tr>
+                                    <td>@ListSpec[i].Title</td>
+                                    <td>@ListSpec[i].Content</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -109,22 +102,13 @@
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
-                            <tr>
-                                <td>Экран</td>
-                                <td>6.1"/2532x1170 Пикс</td>
-                            </tr>
-                            <tr>
-                                <td>Технология экрана</td>
-                                <td>OLED</td>
-                            </tr>
-                            <tr>
-                                <td>Тип процессора</td>
-                                <td>A14 Bionic</td>
-                            </tr>
-                            <tr>
-                                <td>Экран</td>
-                                <td>6.1"/2532x1170 Пикс</td>
-                            </tr>
+                            @for (int i = ListSpec.Count/2; i < ListSpec.Count; i++)
+                            {
+                                <tr>
+                                    <td>@ListSpec[i].Title</td>
+                                    <td>@ListSpec[i].Content</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
