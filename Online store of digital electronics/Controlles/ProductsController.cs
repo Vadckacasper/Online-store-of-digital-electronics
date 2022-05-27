@@ -54,10 +54,12 @@ namespace Online_store_of_digital_electronics.Controlles
                 return NotFound();
             }
 
-            var products = await _context.products.Include(m => m.manufacturer).Include(s => s.Specifications)
-                .FirstOrDefaultAsync(m => m.Id_product == id);
+            var products = await _context.products.Include(m => m.manufacturer).Include(s => s.Specifications).FirstOrDefaultAsync(m => m.Id_product == id);
             products.ProductOrder.Clear();
-            products.ProductOrder.Add(Cart.ProductOrder.FirstOrDefault(po => po.Id_product == id));
+            if (Cart.ProductOrder.FirstOrDefault(po => po.Id_product == id) != null)
+                {
+                products.ProductOrder.Add(Cart.ProductOrder.FirstOrDefault(po => po.Id_product == id));
+            }
             if (products == null)
             {
                 return NotFound();

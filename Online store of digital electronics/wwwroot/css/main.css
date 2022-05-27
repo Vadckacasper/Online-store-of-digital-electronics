@@ -94,6 +94,7 @@ a {
 }
 
 .nav-icon {
+    cursor: pointer;
     font-size: 20;
     transition: all .3s;
 }

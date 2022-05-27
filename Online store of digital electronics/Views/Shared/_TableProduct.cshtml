@@ -1,0 +1,37 @@
+﻿@model Orders
+
+
+<table class="table align-middle mb-0 bg-white">
+    <tbody>
+        @foreach (var products in Model.ProductOrder)
+        {
+            <tr class="list-group-item-action">
+                <td>
+
+                    <div class="d-flex align-items-center">
+                        <a asp-controller="Products" asp-action="Details" asp-route-id="@products.Product.Id_product">
+                            <img src="@products.Product.Image"
+                                 alt=""
+                                 style="width: 45px; height: 45px" />
+                        </a>
+                        <div class="ms-3">
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@products.Product.Id_product">
+                                <p class="fw-bold mb-1">@products.Product.manufacturer.Name</p>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@products.Product.Id_product"><p class="fw-normal mb-1">@products.Product.Name</p></a>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">@products.Product.Price</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">@products.NumberProductsTheOrder</p>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

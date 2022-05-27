@@ -26,12 +26,32 @@ namespace Online_store_of_digital_electronics.Controlles
             _context = context;
         }
 
+        [HttpGet]
+        public IActionResult Decoration()
+        {
+            string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Orders orders = _context.orders.Include(po => po.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            if (orders.ProductOrder.Count > 0)
+            {
+                orders.Status = "Выдан";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("ShoppingСart", "Orders");
+        }
+
         // GET: Orders
         [HttpGet]
         public IActionResult ShoppingСart()
         {
             string BuyersID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Orders Cart = _context.orders.Include(o => o.ProductOrder).ThenInclude(p => p.Product).ThenInclude(p => p.manufacturer).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
+            if (Cart == null)
+            {
+                Buyers buyers = _context.buyers.FirstOrDefault(b => b.Id == BuyersID);
+                Cart = new Orders() { Status = "Оформление", Buyers = buyers };
+                _context.orders.Add(Cart);
+            }
+            _context.SaveChanges();
             return View(Cart.ProductOrder);
         }
         [HttpPost]

@@ -13,13 +13,11 @@ namespace Online_store_of_digital_electronics.ViewModel
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Телефон")]
+        public string Phone { get; set; }
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "Год рождения")]
-        public int Year { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
