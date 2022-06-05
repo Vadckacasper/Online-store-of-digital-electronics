@@ -6,7 +6,7 @@
         <i class="fas fa-minus"></i>
     </button>
     <input type="hidden" name="id" value="@Model.Id_product" />
-    <input min="0" type="number" name="Number" value="@Model.NumberProductsTheOrder" onchange="subm()" class="form-control form-control-sm" style="width: 50px; text-align:center" />
+    <input min="1" type="number" name="Number" value="@Model.NumberProductsTheOrder" onchange="subm()" class="form-control form-control-sm" style="width: 50px; text-align:center" />
     <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
         <i class="fas fa-plus"></i>
     </button>

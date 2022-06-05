@@ -7,5 +7,5 @@
 
 @await Html.PartialAsync("~/Views/Shared/_card_category.cshtml", Model.ProductCategories.FirstOrDefault(c => c.Name == "Электроника"))
 @await Component.InvokeAsync("Swiper", "Смартфоны")
-@await Component.InvokeAsync("Swiper", "Смарт часы")
+@await Component.InvokeAsync("Swiper", "Ноутбуки")
 @await Html.PartialAsync("~/Views/Shared/_card_category.cshtml", Model.ProductCategories.FirstOrDefault(c => c.Name == "Бытовая техника"))

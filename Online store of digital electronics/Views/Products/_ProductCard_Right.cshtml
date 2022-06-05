@@ -16,9 +16,10 @@
                     </a>
                 </div>
             </div>
-            <div class="card-button ">
+            <div class="card-button d-flex justify-content-between align-items-center" style="margin-right:10px">
                 <div class="card-price float-start">
-                    <div class="product-price"> @priceSale <small>@product.Price₽</small></div>
+                    <div class="product-price"> @priceSale₽ @if (product.Sale > 0)
+                                        {<small>@product.Price₽</small>}</div>
                 </div>
                 <div class="card-button-buy float-start">
                     @{

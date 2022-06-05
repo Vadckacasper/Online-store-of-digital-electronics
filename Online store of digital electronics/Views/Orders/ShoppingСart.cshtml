@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     <h5 class="mb-0">
-                                        <div class="product-price"> @priceSale₽ <small>@product.Product.Price₽</small></div>
+                                        <div class="product-price"> @priceSale₽ @if(product.Product.Sale > 0){<small>@product.Product.Price₽</small>}</div>
                                     </h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1">

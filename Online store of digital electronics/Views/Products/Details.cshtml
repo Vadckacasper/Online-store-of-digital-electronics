@@ -35,7 +35,12 @@
                             <a href="#description" class="link-detailed">Читать далее</a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 d-block" style="margin-top:70px">
+                        @{decimal priceSale = (Model.Price / 100) * (100 - Model.Sale); }
+                            <div class="product-price" style="font-size:25px">
+                                @priceSale₽ @if (Model.Sale > 0)
+                                {<small>@Model.Price₽</small>}
+                            </div>
                         @{
                             if (Model.ProductOrder.Count == 0)
                             {

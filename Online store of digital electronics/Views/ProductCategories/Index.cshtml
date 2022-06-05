@@ -105,7 +105,7 @@
             </div>
         </div>
     </div>
-    @await Component.InvokeAsync("Swiper", new { nameCategory = "Смарт часы" })
+    @await Component.InvokeAsync("Swiper", new { nameCategory = Model.ProductCategory.Name +"1"})
 </section>
 
 <script>

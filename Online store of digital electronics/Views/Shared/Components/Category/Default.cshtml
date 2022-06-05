@@ -6,9 +6,19 @@
             <div class="col-3 border-end">
                 <div class="catalog-header">
                     <ul class="list-group list-group-flush">
+                        @{int i = 0; }
                         @foreach (ProductCategory item in Model)
                         {
-                            <li class="list-group-item list-group-item-action catalog-item" data-bs-toggle="collapse" href="#Catalog_@item.Id_сategory.ToString()" role="button" aria-controls="Catalog_@item.Id_сategory.ToString()">  @item.Name</li>
+                            if (i == 0)
+                            {
+                                <li class="list-group-item list-group-item-action catalog-item" data-bs-toggle="collapse" href="#Catalog_@item.Id_сategory.ToString()" role="button" aria-expanded="true" aria-controls="Catalog_@item.Id_сategory.ToString()">  @item.Name</li>
+                                i++;
+                            }
+                            else
+                            {
+                                <li class="list-group-item list-group-item-action catalog-item collapsed" data-bs-toggle="collapse" href="#Catalog_@item.Id_сategory.ToString()" role="button" aria-expanded="false" aria-controls="Catalog_@item.Id_сategory.ToString()">  @item.Name</li>
+
+                            }
                         }
                     </ul>
                 </div>
@@ -17,26 +27,51 @@
                 @foreach (ProductCategory item in Model)
                 {
 
-                    <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@item.Id_сategory.ToString()">
-                        @foreach (ProductCategory parent in item.Children)
-                        {
-                            <div class="col-3 m-3">
-                                <div class="subcatalog-item">
-                                    <div class="subcatalog-header"><a asp-controller="ProductCategories" asp-action="Category" asp-route-id="@parent.Id_сategory">@parent.Name</a></div>
-                                    @foreach (ProductCategory child in parent.Children)
-                                    {
-                                        <li>
-                                            <a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
-                                                @child.Name
-                                            </a>
-                                        </li>
-                                    }
+                    if (i == 1)
+                    {
+                        i++;
+                        <div class="row collapse show" data-bs-parent="#subcatalog" id="Catalog_@item.Id_сategory.ToString()">
+                            @foreach (ProductCategory parent in item.Children)
+                            {
+                                <div class="col-3 m-3">
+                                    <div class="subcatalog-item">
+                                        <div class="subcatalog-header"><a asp-controller="ProductCategories" asp-action="Category" asp-route-id="@parent.Id_сategory">@parent.Name</a></div>
+                                        @foreach (ProductCategory child in parent.Children)
+                                        {
+                                            <li>
+                                                <a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
+                                                    @child.Name
+                                                </a>
+                                            </li>
+                                        }
 
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row collapse" data-bs-parent="#subcatalog" id="Catalog_@item.Id_сategory.ToString()">
+                            @foreach (ProductCategory parent in item.Children)
+                            {
+                                <div class="col-3 m-3">
+                                    <div class="subcatalog-item">
+                                        <div class="subcatalog-header"><a asp-controller="ProductCategories" asp-action="Category" asp-route-id="@parent.Id_сategory">@parent.Name</a></div>
+                                        @foreach (ProductCategory child in parent.Children)
+                                        {
+                                            <li>
+                                                <a asp-area="" asp-controller="ProductCategories" asp-action="Index" asp-route-id="@child.Id_сategory">
+                                                    @child.Name
+                                                </a>
+                                            </li>
+                                        }
 
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
                 }
             </div>
         </div>
