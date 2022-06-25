@@ -6,12 +6,11 @@
         <i class="fas fa-minus"></i>
     </button>
     <input type="hidden" name="id" value="@Model.Id_product" />
-    <input min="1" type="number" name="Number" value="@Model.NumberProductsTheOrder" onchange="subm()" class="form-control form-control-sm" style="width: 50px; text-align:center" />
+    <input min="1" max="@Model.Product.manufacturer.Number_products" type="number" name="Number" value="@Model.NumberProductsTheOrder" onchange="subm()" class="form-control form-control-sm" style="width: 60px; text-align:center" />
     <button class="btn btn-link" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
         <i class="fas fa-plus"></i>
     </button>
 </form>
-
 <script>
     function subm() {
         document.querySelector("#submitCount").click();

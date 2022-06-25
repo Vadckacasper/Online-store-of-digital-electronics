@@ -33,6 +33,11 @@ namespace Online_store_of_digital_electronics.Controlles
             Orders orders = _context.orders.Include(po => po.ProductOrder).FirstOrDefault(o => o.Buyers.Id == BuyersID && o.Status == "Оформление");
             if (orders.ProductOrder.Count > 0)
             {
+                List<Manufacturers> m;
+                foreach (var prod in orders.ProductOrder)
+                {
+                    _context.manufacturers.FirstOrDefault(p => p.Id_manufacturer == _context.products.FirstOrDefault(pr => pr.Id_product == prod.Id_product).Id_manufacturer).Number_products -= prod.NumberProductsTheOrder;
+                }
                 orders.Status = "Выдан";
                 _context.SaveChanges();
             }
@@ -104,8 +109,8 @@ namespace Online_store_of_digital_electronics.Controlles
                 Cart.ProductOrder.Add(productOrder);
             }
             _context.SaveChanges();
-
-            return PartialView("~/Views/Shared/_ProductСounter.cshtml", productOrder);
+            var prod = _context.productOrders.Include(p => p.Product).ThenInclude(m => m.manufacturer).FirstOrDefault(po => po.Id_order == Cart.Id_order && po.Id_product == id);
+            return PartialView("~/Views/Shared/_ProductСounter.cshtml", prod);
         }
 
         [HttpPost]

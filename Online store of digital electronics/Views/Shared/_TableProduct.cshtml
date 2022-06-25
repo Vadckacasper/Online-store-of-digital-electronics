@@ -6,7 +6,7 @@
 }
 <table class="table align-middle mb-0 bg-white">
     <tbody>
-        @foreach (var products in Model.ProductOrder)
+        @foreach (var products in Model.ProductOrder.OrderBy(p => p.Id_product))
         {
             decimal priceSale = (products.Product.Price / 100) * (100 - products.Product.Sale);
             number += products.NumberProductsTheOrder;

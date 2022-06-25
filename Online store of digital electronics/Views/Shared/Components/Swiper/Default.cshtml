@@ -1,7 +1,7 @@
 ﻿@model Online_store_of_digital_electronics.Models.ProductCategory
 
 <section>
-    <h1>@Model.Name</h1>
+    <h1><a asp-controller="ProductCategories" asp-action="Index" asp-route-id="@Model.Id_сategory">@Model.Name</a></h1>
     <div class="swiper__container">
         <div class="swiper-btn leftNav"><i class="fa-solid fa-arrow-left arrow"></i></div>
         <div class="swiper-btn rightNav"><i class="fa-solid fa-arrow-right arrow"></i></div>

@@ -2,10 +2,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Главная страница</h1>
-@await Html.PartialAsync("~/Views/Home/_HomeCarousel.cshtml")
 
+@await Html.PartialAsync("~/Views/Home/_HomeCarousel.cshtml")
 @await Html.PartialAsync("~/Views/Shared/_card_category.cshtml", Model.ProductCategories.FirstOrDefault(c => c.Name == "Электроника"))
 @await Component.InvokeAsync("Swiper", "Смартфоны")
+@await Component.InvokeAsync("Swiper", "Планшеты")
 @await Component.InvokeAsync("Swiper", "Ноутбуки")
 @await Html.PartialAsync("~/Views/Shared/_card_category.cshtml", Model.ProductCategories.FirstOrDefault(c => c.Name == "Бытовая техника"))
